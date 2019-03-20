@@ -1,0 +1,22 @@
+body {
+    font-family: 'Sawarabi Mincho', sans-serif;
+}
+
+cite {
+    font-family: 'Tangerine', cursive;
+    font-size: 22px;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+.tweet p {
+    font-size: 12px;
+}
+
+.centered {
+    margin: auto;
+    width: 50%;
+}

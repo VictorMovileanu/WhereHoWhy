@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Index.html</h1>
+<div class="centered">
+    <h1>Tweets</h1>
+    {% if request.user.is_authenticated %}
+        <form action="." method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">post</button>
+        </form>
+    {% endif %}
+
+    {% for tweet in tweets %}
+        <div class="tweet">
+            <p>{{ tweet.created }}</p>
+            <blockquote>{{ tweet.quote }}</blockquote>
+            <cite>{{ tweet.source|safe }}</cite>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
