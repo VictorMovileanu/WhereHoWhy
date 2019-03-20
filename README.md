@@ -1,5 +1,22 @@
 # Installation
 
+## Deployment
+```bash
+git pull
+./manage.py migrate
+./manage.py collectstatic
+sudo supervisorctl restart wherehowhy
+```
+
+## Environment
+```bash
+git clone https://github.com/ViggieSmalls/WhereHoWhy
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+./mange.py migrate
+```
+
 ## Server setup
 ```bash
 sudo apt-get update
@@ -32,14 +49,4 @@ createuser wherehowhy
 createdb wherehowhy --owner wherehowhy
 
 psql -c "ALTER USER u_boards WITH PASSWORD '<strong password>'"
-
-```
-
-## Environment
-```bash
-git clone https://github.com/ViggieSmalls/WhereHoWhy
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
-./mange.py migrate
 ```
