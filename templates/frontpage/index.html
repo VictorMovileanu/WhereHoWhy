@@ -8,6 +8,12 @@
             {{ form.as_p }}
             <button type="submit">post</button>
         </form>
+        <h2>Preview</h2>
+        <div class="tweet preview">
+            <blockquote></blockquote>
+            <cite></cite>
+        </div>
+        <hr>
     {% endif %}
 
     {% for tweet in tweets %}
