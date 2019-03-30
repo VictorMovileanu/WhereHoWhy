@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="centered">
-        <h1>Skyfly</h1>
-    </div>
+
+<h1>Skyfly</h1>
+
+<form action=".">
+<table>
+    <tr>
+        <th>City</th>
+        <th>Price</th>
+        <th>Color</th>
+    </tr>
+    <tr>
+        <td><input type="text" name="city"></td>
+        <td><input type="number" name="price"></td>
+        <td><input type="color" name="color"></td>
+    </tr>
+</table>
+</form>
+
 {% endblock %}
