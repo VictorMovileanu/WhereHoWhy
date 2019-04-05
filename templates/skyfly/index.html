@@ -4,16 +4,19 @@
 <h1>Skyfly</h1>
 
 <form action=".">
-<table>
-    <tr>
+<table class="text-centered">
+    <tr class="table-header">
         <th>City</th>
         <th>Price</th>
         <th>Color</th>
     </tr>
     <tr>
-        <td><input type="text" name="city"></td>
-        <td><input type="number" name="price"></td>
-        <td><input type="color" name="color"></td>
+        <td><input type="text" id="city"></td>
+        <td><input type="number" id="price"></td>
+        <td><input type="color" id="color"></td>
+    </tr>
+    <tr>
+        <td colspan="3"><button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button></td>
     </tr>
 </table>
 </form>
