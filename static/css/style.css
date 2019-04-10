@@ -33,5 +33,6 @@ a {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    display: inline-block;
+    display: table-cell;
+    transform: translateX(50%);
 }

@@ -27,10 +27,12 @@ $('.js-addDestination').on("click", function () {
     let city = $("#city");
     let price = $("#price");
     let color = $("#color");
-    const table_row = "<tr class='data-row'>" +
-        `<td data-destination='${city.val()}'>${city.val()}</td>` +
-        `<td data-destination='${price.val()}'>${price.val()}</td>` +
-        `<td data-destination='${color.val()}'><span class='dot' style='background-color: ${color.val()}'></span></td>` +
+    const table_row =
+        `<tr class='data-row' data-city='${city.val()}' data-price='${price.val()}' data-color='${color.val()}'>` +
+            `<td>${city.val()}</td>` +
+            `<td>${price.val()}</td>` +
+            `<td><span class='dot' style='background-color: ${color.val()}'></span></td>` +
+            `<td><button class='js-deleteRow' type='button'>X</button></td>` +
         "</tr>";
     $(table_row).insertAfter(".table-header");
     city.val('');
@@ -39,15 +41,13 @@ $('.js-addDestination').on("click", function () {
 });
 
 $('.js-readTable').on("click", function () {
-    let tableData = {};
-    let i = 0;
+    let tableData = [];
     $('.data-row').each(function () {
-        let rowData = [];
-        $('td', this).each(function () {
-            rowData.push($(this).attr('data-destination'))
-        });
-        tableData[i] = rowData;
-        i += 1;
+        tableData.push($(this).data());
     });
     console.log(tableData);
+});
+
+$('table').on("click", ".js-deleteRow", function () {
+    $(this).closest('.data-row').remove()
 });
