@@ -34,7 +34,7 @@ $('.js-addDestination').on("click", function () {
             `<td><span class='dot' style='background-color: ${color.val()}'></span></td>` +
             `<td><button class='js-deleteRow' type='button'>X</button></td>` +
         "</tr>";
-    $(table_row).insertAfter(".table-header");
+    $('tbody').append(table_row);
     city.val('');
     price.val('');
     color.val('#000000')
