@@ -6,11 +6,14 @@
 <form action=".">
 <table class="text-centered">
     <thead>
-        <th>City</th>
-        <th>Price</th>
-        <th>Color</th>
+        <tr>
+            <th>City</th>
+            <th>Price</th>
+            <th>Color</th>
+        </tr>
     </thead>
     <tbody>
+        {# here comes the dynamicly added content #}
     </tbody>
     <tfoot>
         <tr>
@@ -20,6 +23,26 @@
         </tr>
         <tr>
             <td colspan="3"><button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button></td>
+        </tr>
+    </tfoot>
+</table>
+<table class="text-centered">
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+        </tr>
+    </thead>
+    <tbody>
+        {# here comes the dynamicly added content #}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><input data-toggle="datepicker" id="time_from"></td>
+            <td><input data-toggle="datepicker" id="time_until"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button class="js-addTimeFrame is-fullwidth" type="button">Save row and add a new one</button></td>
         </tr>
     </tfoot>
 </table>

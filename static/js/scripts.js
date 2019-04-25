@@ -24,9 +24,9 @@ $input_source.on("keyup", function () {
 });
 
 $('.js-addDestination').on("click", function () {
-    let city = $("#city");
-    let price = $("#price");
-    let color = $("#color");
+    const city = $("#city");
+    const price = $("#price");
+    const color = $("#color");
     const table_row =
         `<tr class='data-row' data-city='${city.val()}' data-price='${price.val()}' data-color='${color.val()}'>` +
             `<td>${city.val()}</td>` +
@@ -34,20 +34,41 @@ $('.js-addDestination').on("click", function () {
             `<td><span class='dot' style='background-color: ${color.val()}'></span></td>` +
             `<td><button class='js-deleteRow' type='button'>X</button></td>` +
         "</tr>";
-    $('tbody').append(table_row);
+    $(this).closest('table').find('tbody').append(table_row);
     city.val('');
     price.val('');
     color.val('#000000')
 });
 
+$('.js-addTimeFrame').on("click", function () {
+    const from = $("#time_from");
+    const until = $("#time_until");
+    const table_row =
+        `<tr class='data-row' data-from='${from.val()}' data-until='${until.val()}'>` +
+            `<td>${from.val()}</td>` +
+            `<td>${until.val()}</td>` +
+            `<td><button class='js-deleteRow' type='button'>X</button></td>` +
+        "</tr>";
+    $(this).closest('table').find('tbody').append(table_row);
+    from.val('');
+    until.val('');
+});
+
 $('.js-readTable').on("click", function () {
-    let tableData = [];
+    const tableData = [];
     $('.data-row').each(function () {
         tableData.push($(this).data());
     });
     console.log(tableData);
 });
 
+// js-deleteRow
 $('table').on("click", ".js-deleteRow", function () {
     $(this).closest('.data-row').remove()
+});
+
+$(function () {
+    $('[data-toggle="datepicker"]').datepicker({
+        format: 'dd/mm/yyyy'
+    })
 });
