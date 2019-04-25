@@ -43,15 +43,19 @@ $('.js-addDestination').on("click", function () {
 $('.js-addTimeFrame').on("click", function () {
     const from = $("#time_from");
     const until = $("#time_until");
-    const table_row =
-        `<tr class='data-row' data-from='${from.val()}' data-until='${until.val()}'>` +
-            `<td>${from.val()}</td>` +
-            `<td>${until.val()}</td>` +
-            `<td><button class='js-deleteRow' type='button'>X</button></td>` +
-        "</tr>";
-    $(this).closest('table').find('tbody').append(table_row);
-    from.val('');
-    until.val('');
+    if ( Date.parse(from.val()) < Date.parse(until.val()) ) {
+        const table_row =
+            `<tr class='data-row' data-from='${from.val()}' data-until='${until.val()}'>` +
+                `<td>${from.val()}</td>` +
+                `<td>${until.val()}</td>` +
+                `<td><button class='js-deleteRow' type='button'>X</button></td>` +
+            "</tr>";
+        $(this).closest('table').find('tbody').append(table_row);
+        from.val('');
+        until.val('');
+    } else {
+        alert('Start date must be smaller than end date!')
+    }
 });
 
 $('.js-readTable').on("click", function () {
@@ -68,7 +72,5 @@ $('table').on("click", ".js-deleteRow", function () {
 });
 
 $(function () {
-    $('[data-toggle="datepicker"]').datepicker({
-        format: 'dd/mm/yyyy'
-    })
+    $('[data-toggle="datepicker"]').datepicker()
 });
