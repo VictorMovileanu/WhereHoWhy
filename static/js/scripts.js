@@ -67,7 +67,7 @@ $('.js-readTable').on("click", function () {
             tableData[table_id].push($(this).data());
         });
     });
-    console.log(tableData);
+    submitData(tableData);
 });
 
 // js-deleteRow
@@ -78,3 +78,14 @@ $('table').on("click", ".js-deleteRow", function () {
 $(function () {
     $('[data-toggle="datepicker"]').datepicker()
 });
+
+function submitData(data) {
+    $.ajax({
+        url: '/skyfly/submit/',
+        type: 'POST',
+        data: {'data': JSON.stringify(data)},
+    })
+    .done( function () {
+        alert('request sent')
+    })
+}
