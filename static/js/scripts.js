@@ -59,9 +59,13 @@ $('.js-addTimeFrame').on("click", function () {
 });
 
 $('.js-readTable').on("click", function () {
-    const tableData = [];
-    $('.data-row').each(function () {
-        tableData.push($(this).data());
+    const tableData = {};
+    $('table').each(function () {
+        let table_id = this.id;
+        tableData[table_id] = [];
+        $(`#${table_id} .data-row`).each(function () {
+            tableData[table_id].push($(this).data());
+        });
     });
     console.log(tableData);
 });
