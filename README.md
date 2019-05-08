@@ -50,3 +50,9 @@ createdb wherehowhy --owner wherehowhy
 
 psql -c "ALTER USER u_boards WITH PASSWORD '<strong password>'"
 ```
+
+## Celery
+Start with:
+```
+celery -A WhereHoWhy worker
+```

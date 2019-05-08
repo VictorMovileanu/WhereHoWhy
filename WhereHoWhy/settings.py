@@ -126,3 +126,5 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
