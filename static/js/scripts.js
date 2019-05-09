@@ -43,7 +43,11 @@ $('.js-addDestination').on("click", function () {
 $('.js-addTimeFrame').on("click", function () {
     const from = $("#time_from");
     const until = $("#time_until");
-    if ( Date.parse(from.val()) < Date.parse(until.val()) ) {
+    const ary_from = from.val().split('/');
+    const ary_until = until.val().split('/');
+    const a = `${ary_from[1]}/${ary_from[0]}/${ary_from[2]}`;
+    const b = `${ary_until[1]}/${ary_until[0]}/${ary_until[2]}`;
+    if ( Date.parse(a) < Date.parse(b) ) {
         const table_row =
             `<tr class='data-row' data-from='${from.val()}' data-until='${until.val()}'>` +
                 `<td>${from.val()}</td>` +
@@ -76,7 +80,9 @@ $('table').on("click", ".js-deleteRow", function () {
 });
 
 $(function () {
-    $('[data-toggle="datepicker"]').datepicker()
+    $('[data-toggle="datepicker"]').datepicker({
+        format: 'dd/mm/yyyy'
+    })
 });
 
 function submitData(data) {
