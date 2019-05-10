@@ -87,7 +87,7 @@ $(function () {
 
 function submitData(data) {
     $.ajax({
-        url: '/skyfly/submit/',
+        url: skyfly_submission_url,
         type: 'POST',
         data: {'data': JSON.stringify(data)},
     })
