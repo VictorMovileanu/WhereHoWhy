@@ -62,18 +62,6 @@ $('.js-addTimeFrame').on("click", function () {
     }
 });
 
-$('.js-readTable').on("click", function () {
-    const tableData = {};
-    $('table').each(function () {
-        let table_id = this.id;
-        tableData[table_id] = [];
-        $(`#${table_id} .data-row`).each(function () {
-            tableData[table_id].push($(this).data());
-        });
-    });
-    submitData(tableData);
-});
-
 // js-deleteRow
 $('table').on("click", ".js-deleteRow", function () {
     $(this).closest('.data-row').remove()
@@ -84,14 +72,3 @@ $(function () {
         format: 'dd/mm/yyyy'
     })
 });
-
-function submitData(data) {
-    $.ajax({
-        url: skyfly_submission_url,
-        type: 'POST',
-        data: {'data': JSON.stringify(data)},
-    })
-    .done( function () {
-        alert('request sent')
-    })
-}
