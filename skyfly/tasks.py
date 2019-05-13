@@ -1,12 +1,23 @@
 from __future__ import absolute_import, unicode_literals
 
+from datetime import datetime
+
 from billiard.pool import Pool
 from celery import shared_task
 import requests
 
+from skyfly.models import SkyflyRequest, KiwiResponse
+
 
 def process_request(i):
     request_hash, destination, date = i
+
+    try:
+        skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
+    except SkyflyRequest.DoesNotExist:
+        raise Exception(f'SkyflyRequest object with hash {request_hash} does not exist')
+    # WARNING: question: does it make any sense to check for duplicate hashes?
+
     base_url = 'https://api.skypicker.com/'
     flights = base_url + 'flights'
     loc = 'MUC'
@@ -29,26 +40,24 @@ def process_request(i):
     for trip in resp.json()['data']:
 
         try:
-            t_departure, t_arrival, trip_duration = _get_flight_duration_information(trip, loc, destination)
+            t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination)
 
-            d = {
-                'city': trip['cityTo'],
-                'price': trip['price'],
-                'departure': t_departure,  # datetime.utcfromtimestamp()
-                'arrival': t_arrival,  # datetime.utcfromtimestamp()
-                'trip_duration': trip_duration,
-                'deep_link': trip['deep_link'],
-                'color': destination['color'],
-                # 'opacity': 0.5
-            }
-
-            print(d)
+            KiwiResponse.objects.create(
+                skyfly_request=skyfly_request_object,
+                city=trip['cityTo'],
+                price=trip['price'],
+                departure=datetime.utcfromtimestamp(t_departure),
+                arrival=datetime.utcfromtimestamp(t_arrival),
+                trip_duration=trip_duration,
+                deep_link=trip['deep_link'],
+                color=destination['color']
+            )
 
         except Exception:
             pass  # could not be processed for some reason
 
 
-def _get_flight_duration_information(trip, location, destination):
+def _calculate_flight_duration_information(trip, location, destination):
     if destination == 'anywhere':
         routes = trip['routes']
         destination = routes[0][1]
