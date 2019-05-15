@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import logging
 from datetime import datetime
 
 from billiard.pool import Pool
@@ -7,6 +8,9 @@ from celery import shared_task
 import requests
 
 from skyfly.models import SkyflyRequest, KiwiResponse
+
+
+logger = logging.getLogger('skyfly')
 
 
 def process_request(i):
@@ -34,8 +38,8 @@ def process_request(i):
         'price_to': destination['price'],
     }
 
+    logger.debug(f'Querying Kiwi with the parameters: {parameters}')
     resp = requests.get(flights, params=parameters)
-    print(resp.json())
 
     for trip in resp.json()['data']:
 
@@ -53,8 +57,8 @@ def process_request(i):
                 color=destination['color']
             )
 
-        except Exception:
-            pass  # could not be processed for some reason
+        except Exception as e:
+            logger.exception(e)
 
 
 def _calculate_flight_duration_information(trip, location, destination):
