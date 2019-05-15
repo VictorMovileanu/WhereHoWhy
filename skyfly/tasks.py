@@ -44,7 +44,7 @@ def process_request(i):
     for trip in resp.json()['data']:
 
         try:
-            t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination)
+            t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination['city'])
 
             KiwiResponse.objects.create(
                 skyfly_request=skyfly_request_object,

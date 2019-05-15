@@ -6,9 +6,12 @@ from utils.abstract_models import TimeStampedModel
 class SkyflyRequest(TimeStampedModel):
     request_hash = models.CharField(max_length=255, unique=True)
 
+    def __str__(self):
+        return f'Skyfly Request {self.created}'
+
 
 class KiwiResponse(TimeStampedModel):
-    skyfly_request = models.ForeignKey(SkyflyRequest, on_delete=models.CASCADE)
+    skyfly_request = models.ForeignKey(SkyflyRequest, on_delete=models.CASCADE, related_name='flights')
     departure = models.DateTimeField(null=True)
     arrival = models.DateTimeField(null=True)
     city = models.CharField(max_length=100)
