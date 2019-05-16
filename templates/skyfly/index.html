@@ -1,54 +1,76 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+
+    <style>
+      body {
+        display: flex;
+      }
+
+      #scatter-plot {
+        width: 960px;
+        height: 600px;
+        margin: 20px auto;
+      }
+    </style>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/scatter-plot.css' %}"/>
+
+{% endblock %}
+
 {% block content %}
 
 <h1>Skyfly</h1>
-
-<form action=".">
-<table class="text-centered" id="destination-table">
-    <thead>
-        <tr>
-            <th>City</th>
-            <th>Price</th>
-            <th>Color</th>
-        </tr>
-    </thead>
-    <tbody>
-        {# here comes the dynamicly added content #}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td><input type="text" id="city" name="#city"></td>
-            <td><input type="number" id="price"></td>
-            <td><input type="color" id="color"></td>
-        </tr>
-        <tr>
-            <td colspan="3"><button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button></td>
-        </tr>
-    </tfoot>
-</table>
-<table class="text-centered" id="date-table">
-    <thead>
-        <tr>
-            <th>From</th>
-            <th>To</th>
-        </tr>
-    </thead>
-    <tbody>
-        {# here comes the dynamicly added content #}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td><input data-toggle="datepicker" id="time_from"></td>
-            <td><input data-toggle="datepicker" id="time_until"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><button class="js-addTimeFrame is-fullwidth" type="button">Save row and add a new one</button></td>
-        </tr>
-    </tfoot>
-</table>
-</form>
-
+<div>
+    <form action=".">
+    <table class="text-centered" id="destination-table">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Price</th>
+                <th>Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# here comes the dynamicly added content #}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="city" name="#city"></td>
+                <td><input type="number" id="price"></td>
+                <td><input type="color" id="color"></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    <table class="text-centered" id="date-table">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# here comes the dynamicly added content #}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input data-toggle="datepicker" id="time_from"></td>
+                <td><input data-toggle="datepicker" id="time_until"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="js-addTimeFrame is-fullwidth" type="button">Save row and add a new one</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    </form>
     <button class="js-readTable">Test</button>
+</div>
+
+<div id="scatter-plot"></div>
 
 {% endblock %}
 
@@ -85,5 +107,24 @@
                 alert('request sent')
             })
         }
+    </script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="{% static 'js/scatter-plot.js' %}"></script>
+    <script>
+    console.log('test');
+      const myScatterPlot = scatterPlot({
+        containerId: "scatter-plot",
+        dataURL: "{% url 'skyfly:request' 3166187919215175432 %}"
+      });
+
+      // Example shows how to redraw the chart;
+      // setTimeout(() => {
+      //   d3.select("#scatter-plot")
+      //     .style("width", "800px")
+      //     .style("height", "400px");
+      //   myScatterPlot.render();
+      // }, 2000);
     </script>
 {% endblock %}

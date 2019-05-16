@@ -1,0 +1,36 @@
+.scatter-plot svg {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+.scatter-plot .axis .domain {
+  display: none;
+}
+
+.scatter-plot .axis--border {
+  stroke: #000;
+  fill: #fff;
+}
+
+.scatter-plot .node--circle:hover,
+.scatter-plot .node--circle.freezed {
+  fill: #000;
+}
+
+.scatter-plot .tooltip--rect {
+  stroke: #000;
+  fill: #fff;
+}
+
+.scatter-plot .node--circle {
+  cursor: pointer;
+}
+
+.scatter-plot .tooltip--header {
+  font-weight: bold;
+}
+
+.scatter-plot .tooltip--link {
+  text-decoration: underline;
+  cursor: pointer;
+}
