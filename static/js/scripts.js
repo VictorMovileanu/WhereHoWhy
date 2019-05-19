@@ -23,21 +23,32 @@ $input_source.on("keyup", function () {
    timerIdentifier = setTimeout($preview_source.html($input_source.val()), doneTypingInterval);
 });
 
+let iataCodesArray = [];
+
+$.getJSON('/skyfly/data/iata-codes', function (json) {
+    iataCodesArray = json['data']
+});
+
 $('.js-addDestination').on("click", function () {
     const city = $("#city");
     const price = $("#price");
     const color = $("#color");
-    const table_row =
-        `<tr class='data-row' data-city='${city.val()}' data-price='${price.val()}' data-color='${color.val()}'>` +
-            `<td>${city.val()}</td>` +
-            `<td>${price.val()}</td>` +
-            `<td><span class='dot' style='background-color: ${color.val()}'></span></td>` +
-            `<td><button class='js-deleteRow' type='button'>X</button></td>` +
-        "</tr>";
-    $(this).closest('table').find('tbody').append(table_row);
-    city.val('');
-    price.val('');
-    color.val('#000000')
+    if (iataCodesArray.some(e => e === city)) {
+        const table_row =
+            `<tr class='data-row' data-city='${city.val()}' data-price='${price.val()}' data-color='${color.val()}'>` +
+                `<td>${city.val()}</td>` +
+                `<td>${price.val()}</td>` +
+                `<td><span class='dot' style='background-color: ${color.val()}'></span></td>` +
+                `<td><button class='js-deleteRow' type='button'>X</button></td>` +
+            "</tr>";
+        $(this).closest('table').find('tbody').append(table_row);
+        city.val('');
+        price.val('');
+        color.val('#000000')
+    } else {
+        alert('Airport IATA code does not exist')
+    }
+
 });
 
 $('.js-addTimeFrame').on("click", function () {

@@ -1,8 +1,10 @@
 import csv
 import json
+import os
 from datetime import datetime
 
 import pytz
+from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -49,6 +51,12 @@ def csv_serve_view(request, request_hash):
                          _datetime_to_seconds(flight.arrival), flight.trip_duration,
                          flight.deep_link, flight.color, 0.5])
     return response
+
+
+def iata_codes_serve_view(request):
+    with open(os.path.join(settings.BASE_DIR, 'static/data/iata_codes.json')) as json_file:
+        data = json.load(json_file)
+    return JsonResponse({'data': data})
 
 
 def skyfly_request(request, request_hash):
