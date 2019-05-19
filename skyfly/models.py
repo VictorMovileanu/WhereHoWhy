@@ -5,6 +5,7 @@ from utils.abstract_models import TimeStampedModel
 
 class SkyflyRequest(TimeStampedModel):
     request_hash = models.CharField(max_length=255, unique=True)
+    completed = models.DateTimeField(null=True)
 
     def __str__(self):
         return f'Skyfly Request {self.created}'

@@ -97,3 +97,6 @@ def query_kiwi(request_hash, destinations, dates):
     pool = Pool(5)
     iterable = f(request_hash, destinations, dates)
     pool.map(process_request, iterable)
+    skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
+    skyfly_request_object.created = datetime.now()
+    skyfly_request_object.save()
