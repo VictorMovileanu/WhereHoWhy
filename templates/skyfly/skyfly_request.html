@@ -30,17 +30,27 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <script src="{% static 'js/scatter-plot.js' %}"></script>
     <script>
-      const myScatterPlot = scatterPlot({
-        containerId: "scatter-plot",
-        dataURL: "{% url 'skyfly:request-csv-data' request_hash %}"
-      });
+        let intervalID = null;
+        const myScatterPlot = scatterPlot({
+            containerId: "scatter-plot",
+            dataURL: "{% url 'skyfly:request-csv-data' request_hash %}"
+        });
+        $(document).ready(function () {
+            intervalID = setInterval(updateScatterPlot, 5000)
+        });
 
-      // Example shows how to redraw the chart;
-      // setTimeout(() => {
-      //   d3.select("#scatter-plot")
-      //     .style("width", "800px")
-      //     .style("height", "400px");
-      //   myScatterPlot.render();
-      // }, 2000);
+        function updateScatterPlot () {
+            $.ajax({
+                url: "{% url 'skyfly:request-info' request_hash %}",
+                success: function (data) {
+                    if (data['status'] === 'running') {
+                        myScatterPlot.render();
+                    } else if (data['status'] === 'finished') {
+                        clearInterval(intervalID)
+                    }
+                }
+            })
+        }
+
     </script>
 {% endblock %}

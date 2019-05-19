@@ -94,6 +94,15 @@ def skyfly_request(request, request_hash):
     return render(request, 'skyfly/skyfly_request.html', {'request_hash': request_hash})
 
 
+def skyfly_request_info(request, request_hash):
+    skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
+    if skyfly_request_object.completed:
+        status = 'finished'
+    else:
+        status = 'running'
+    return JsonResponse({'status': status})
+
+
 def _datetime_to_seconds(dt_object):
     """Number of seconds from the date ot the datetime object to 1. January 1970"""
     delta_datetime = (dt_object - datetime(1970, 1, 1, tzinfo=pytz.utc))
