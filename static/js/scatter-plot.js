@@ -2,8 +2,6 @@ function scatterPlot(options) {
   const containerId = options.containerId;
   const dataURL = options.dataURL;
 
-  const iconT0URL = "/static/icons/message-ballon.svg";
-  const iconT1URL = "/static/icons/message-balloon.svg";
   const xLabel = "Label for X Axis";
   const yLabel = "Label for Y Axis";
 
@@ -207,7 +205,7 @@ function scatterPlot(options) {
   const tooltipPadding = 5;
   const tooltipRows = 4;
   const tooltipRowHeight = (tooltipHeight - tooltipPadding * 2) / tooltipRows;
-  const iconSize = 12;
+  const iconSize = 15;
   const iconRowOffset = 50;
   function renderTooltip(g, d) {
     const tooltip = g.append("g").attr("class", "tooltip");
@@ -248,12 +246,14 @@ function scatterPlot(options) {
     // Second row
     const row2 = row.filter(i => i === 1);
     row2
-      .append("image")
+      .append("svg:foreignObject")
       .attr("x", iconRowOffset)
       .attr("y", -iconSize / 2)
       .attr("width", iconSize)
       .attr("height", iconSize)
-      .attr("xlink:href", iconT0URL);
+        .append("xhtml:span")
+        .attr("class", "icon-plane")
+        .style("font-size", "14px");
     row2
       .append("text")
       .attr("x", iconRowOffset + 6 + iconSize)
@@ -263,12 +263,14 @@ function scatterPlot(options) {
     // Third row
     const row3 = row.filter(i => i === 2);
     row3
-      .append("image")
+      .append("svg:foreignObject")
       .attr("x", iconRowOffset)
       .attr("y", -iconSize / 2)
       .attr("width", iconSize)
       .attr("height", iconSize)
-      .attr("xlink:href", iconT1URL);
+        .append("xhtml:span")
+        .attr("class", "icon-plane-landing")
+        .style("font-size", "14px");
     row3
       .append("text")
       .attr("x", iconRowOffset + 6 + iconSize)
