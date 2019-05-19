@@ -285,7 +285,7 @@ function scatterPlot(options) {
       .attr("x", tooltipWidth / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")
-      .text(d.href)
+      .text("www.kiwi.com")
       .on("click", function() {
         window.open(d.href, "_blank");
       });
