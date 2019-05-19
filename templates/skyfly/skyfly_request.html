@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+
+    <style>
+      body {
+        display: flex;
+      }
+
+      #scatter-plot {
+        width: 960px;
+        height: 600px;
+        margin: 20px auto;
+      }
+    </style>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/scatter-plot.css' %}"/>
+
+{% endblock %}
+
+
+{% block content %}
+    <div id="scatter-plot"></div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const skyfly_submission_url = "{% url 'skyfly:submit' %}";
+
+        $('.js-readTable').on("click", function () {
+            /*
+            * Submission data format:
+            * {
+            *   'destination-table': [{'city': $, 'price': $, 'color': $}, ...],
+            *   'date-table': [{'from': 'dd/mm/yyyy', 'until': 'dd/mm/yyyy'], ...]
+            * }
+            * */
+            const tableData = {};
+            $('table').each(function () {
+                let table_id = this.id;
+                tableData[table_id] = [];
+                $(`#${table_id} .data-row`).each(function () {
+                    tableData[table_id].push($(this).data());
+                });
+            });
+            submitData(tableData);
+        });
+
+        function submitData(data) {
+            $.ajax({
+                url: skyfly_submission_url,
+                type: 'POST',
+                data: {'data': JSON.stringify(data)},
+            })
+            .done( function () {
+                alert('request sent')
+            })
+        }
+    </script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="{% static 'js/scatter-plot.js' %}"></script>
+    <script>
+    console.log('test');
+      const myScatterPlot = scatterPlot({
+        containerId: "scatter-plot",
+        dataURL: "{% url 'skyfly:request-csv-data' request_hash %}"
+      });
+
+      // Example shows how to redraw the chart;
+      // setTimeout(() => {
+      //   d3.select("#scatter-plot")
+      //     .style("width", "800px")
+      //     .style("height", "400px");
+      //   myScatterPlot.render();
+      // }, 2000);
+    </script>
+{% endblock %}

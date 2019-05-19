@@ -36,7 +36,7 @@ def _generate_submission_data(request):
     return request_hash, destinations, dates
 
 
-def skyfly_request(request, request_hash):
+def csv_serve_view(request, request_hash):
     response = HttpResponse(content_type='text/csv')
     flights = SkyflyRequest.objects.get(request_hash=request_hash).flights.all()
     response['Content-Disposition'] = f'attachment; filename="data.csv"'
@@ -47,6 +47,10 @@ def skyfly_request(request, request_hash):
                          _datetime_to_seconds(flight.arrival), flight.trip_duration,
                          flight.deep_link, flight.color, 0.5])
     return response
+
+
+def skyfly_request(request, request_hash):
+    return render(request, 'skyfly/skyfly_request.html', {'request_hash': request_hash})
 
 
 def _datetime_to_seconds(dt_object):
