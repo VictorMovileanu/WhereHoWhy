@@ -81,9 +81,12 @@
                 url: skyfly_submission_url,
                 type: 'POST',
                 data: {'data': JSON.stringify(data)},
-            })
-            .done( function (data) {
-                window.location.href = data['redirect_url']
+                success: function (data) {
+                    window.location.href = data['redirect_url']
+                },
+                error: function (response) {
+                    alert(response['error_msg'])
+                }
             })
         }
     </script>

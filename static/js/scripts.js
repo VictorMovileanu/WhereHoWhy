@@ -33,7 +33,7 @@ $('.js-addDestination').on("click", function () {
     const city = $("#city");
     const price = $("#price");
     const color = $("#color");
-    if (iataCodesArray.some(e => e === city)) {
+    if (iataCodesArray.some(e => e === city.val())) {
         const table_row =
             `<tr class='data-row' data-city='${city.val()}' data-price='${price.val()}' data-color='${color.val()}'>` +
                 `<td>${city.val()}</td>` +

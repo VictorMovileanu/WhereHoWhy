@@ -3,9 +3,11 @@ from __future__ import absolute_import, unicode_literals
 import logging
 from datetime import datetime
 
+import pytz
 from billiard.pool import Pool
 from celery import shared_task
 import requests
+from django.utils import timezone
 
 from skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
 
@@ -50,8 +52,8 @@ def process_request(i):
                 skyfly_request=skyfly_request_object,
                 city=trip['cityTo'],
                 price=trip['price'],
-                departure=datetime.utcfromtimestamp(t_departure),
-                arrival=datetime.utcfromtimestamp(t_arrival),
+                departure=datetime.fromtimestamp(t_departure, tz=pytz.UTC),
+                arrival=datetime.fromtimestamp(t_arrival, tz=pytz.UTC),
                 trip_duration=trip_duration,
                 deep_link=trip['deep_link'],
                 color=destination['color']
@@ -98,5 +100,5 @@ def query_kiwi(request_hash, destinations, dates):
     iterable = f(request_hash, destinations, dates)
     pool.map(process_request, iterable)
     skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
-    skyfly_request_object.created = datetime.now()
+    skyfly_request_object.created = timezone.now()
     skyfly_request_object.save()
