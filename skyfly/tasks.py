@@ -7,8 +7,7 @@ from billiard.pool import Pool
 from celery import shared_task
 import requests
 
-from skyfly.models import SkyflyRequest, KiwiResponse
-
+from skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
 
 logger = logging.getLogger('skyfly')
 
@@ -46,6 +45,7 @@ def process_request(i):
         try:
             t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination['city'])
 
+            # TODO: add admin inline for flights
             KiwiResponse.objects.create(
                 skyfly_request=skyfly_request_object,
                 city=trip['cityTo'],
@@ -58,7 +58,13 @@ def process_request(i):
             )
 
         except Exception as e:
-            logger.exception(e)
+            # TODO: add admin inlines for exceptions
+            KiwiException.objects.create(
+                skyfly_request=skyfly_request_object,
+                exception_message=str(e),
+                data=trip
+            )
+            logger.warning('An error occurred while processing a trip information')
 
 
 def _calculate_flight_duration_information(trip, location, destination):

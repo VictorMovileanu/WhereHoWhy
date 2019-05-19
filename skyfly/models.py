@@ -19,3 +19,9 @@ class KiwiResponse(TimeStampedModel):
     trip_duration = models.PositiveIntegerField('Trip duration in seconds')
     deep_link = models.URLField()
     color = models.CharField(max_length=10)
+
+
+class KiwiException(TimeStampedModel):
+    skyfly_request = models.ForeignKey(SkyflyRequest, on_delete=models.CASCADE, related_name='exceptions')
+    exception_message = models.TextField()
+    data = models.TextField()
