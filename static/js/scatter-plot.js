@@ -2,8 +2,8 @@ function scatterPlot(options) {
   const containerId = options.containerId;
   const dataURL = options.dataURL;
 
-  const xLabel = "Label for X Axis";
-  const yLabel = "Label for Y Axis";
+  const xLabel = "Trip duration";
+  const yLabel = "Price (€)";
 
   // Initial setup
   const chart = {};

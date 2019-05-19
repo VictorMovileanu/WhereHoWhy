@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from skyfly.models import SkyflyRequest
@@ -21,7 +22,8 @@ def submit(request):
     SkyflyRequest.objects.create(request_hash=request_hash)
     if destinations and dates:
         query_kiwi.delay(request_hash, destinations, dates)
-    return JsonResponse({'request_hash': request_hash})
+    redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
+    return JsonResponse({'redirect_url': redirect_url})
 
 
 def _generate_submission_data(request):

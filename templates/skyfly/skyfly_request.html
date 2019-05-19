@@ -4,14 +4,10 @@
 {% block extra_css %}
 
     <style>
-      body {
-        display: flex;
-      }
-
       #scatter-plot {
         width: 960px;
         height: 600px;
-        margin: 20px auto;
+        {#margin: 20px auto;#}
       }
     </style>
 
@@ -23,43 +19,13 @@
 
 {% block content %}
     <div id="scatter-plot"></div>
+
+    <a href="{% url 'skyfly:request-csv-data' request_hash %}">
+        <button>Download full data</button>
+    </a>
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        const skyfly_submission_url = "{% url 'skyfly:submit' %}";
-
-        $('.js-readTable').on("click", function () {
-            /*
-            * Submission data format:
-            * {
-            *   'destination-table': [{'city': $, 'price': $, 'color': $}, ...],
-            *   'date-table': [{'from': 'dd/mm/yyyy', 'until': 'dd/mm/yyyy'], ...]
-            * }
-            * */
-            const tableData = {};
-            $('table').each(function () {
-                let table_id = this.id;
-                tableData[table_id] = [];
-                $(`#${table_id} .data-row`).each(function () {
-                    tableData[table_id].push($(this).data());
-                });
-            });
-            submitData(tableData);
-        });
-
-        function submitData(data) {
-            $.ajax({
-                url: skyfly_submission_url,
-                type: 'POST',
-                data: {'data': JSON.stringify(data)},
-            })
-            .done( function () {
-                alert('request sent')
-            })
-        }
-    </script>
-
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <script src="{% static 'js/scatter-plot.js' %}"></script>
