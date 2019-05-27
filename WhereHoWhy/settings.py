@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'frontpage',
     'skyfly',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
