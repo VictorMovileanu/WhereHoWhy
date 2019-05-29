@@ -66,7 +66,7 @@ def process_request(i):
                 exception_message=str(e),
                 data=trip
             )
-            logger.warning('An error occurred while processing a trip information')
+            logger.exception(e)
 
 
 def _calculate_flight_duration_information(trip, location, destination):

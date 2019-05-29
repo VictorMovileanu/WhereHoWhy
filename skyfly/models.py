@@ -18,7 +18,7 @@ class KiwiResponse(TimeStampedModel):
     city = models.CharField(max_length=100)
     price = models.PositiveIntegerField()
     trip_duration = models.PositiveIntegerField('Trip duration in seconds')
-    deep_link = models.URLField()
+    deep_link = models.URLField(max_length=2083)
     color = models.CharField(max_length=10)
 
 

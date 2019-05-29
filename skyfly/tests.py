@@ -31,4 +31,5 @@ class KiwiTest(TestCase):
              'until': (friday_in_one_month + datetime.timedelta(days=7*i) + datetime.timedelta(days=2)).strftime('%d/%m/%Y')}
             for i in range(4)
         ]
+        # INFO: no delay task
         query_kiwi(request_hash, destinations, dates)
