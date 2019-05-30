@@ -73,14 +73,15 @@ def _validate_dates(dates):
 
 def csv_serve_view(request, request_hash):
     response = HttpResponse(content_type='text/csv')
-    flights = SkyflyRequest.objects.get(request_hash=request_hash).flights.all()
+    grouped_flights = SkyflyRequest.objects.get(request_hash=request_hash).flights(manager='flights').grouped_by_city()
     response['Content-Disposition'] = f'attachment; filename="data.csv"'
     writer = csv.writer(response)
     writer.writerow(['label', 'y', 't0', 't1', 'delta_t', 'href', 'color', 'opacity'])
-    for flight in flights:
-        writer.writerow([flight.city, flight.price, _datetime_to_seconds(flight.departure),
-                         _datetime_to_seconds(flight.arrival), flight.trip_duration,
-                         flight.deep_link, flight.color, 0.5])
+    for city, flights in grouped_flights.items():
+        for flight in flights:
+            writer.writerow([flight.city, flight.price, _datetime_to_seconds(flight.departure),
+                             _datetime_to_seconds(flight.arrival), flight.trip_duration,
+                             flight.deep_link, flight.color, flight.opacity])
     return response
 
 
