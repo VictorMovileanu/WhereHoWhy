@@ -31,9 +31,15 @@ class FlightsManager(models.Manager):
 class SkyflyRequest(TimeStampedModel):
     request_hash = models.CharField(max_length=255, unique=True)
     completed = models.DateTimeField(null=True)
+    start = models.CharField(max_length=3, default='MUC')
+
+    @property
+    def cities(self):
+        return self.flights.distinct('city')
 
     def __str__(self):
-        return f'Skyfly Request {self.created}'
+        cities = list(self.cities.values_list('city', flat=True))
+        return f'Flights from {self.start} to {cities}'
 
 
 class KiwiResponse(TimeStampedModel):
