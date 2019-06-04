@@ -30,8 +30,8 @@ class FlightsManager(models.Manager):
 
 class SkyflyRequest(TimeStampedModel):
     request_hash = models.CharField(max_length=255, unique=True)
-    completed = models.DateTimeField(null=True)
     start = models.CharField(max_length=3, default='MUC')
+    left_combinations = models.PositiveIntegerField("Number of different date-destination combinations left to query")
 
     @property
     def cities(self):
@@ -51,10 +51,11 @@ class KiwiResponse(TimeStampedModel):
     trip_duration = models.PositiveIntegerField('Trip duration in seconds')
     deep_link = models.URLField(max_length=2083)
     color = models.CharField(max_length=10)
-    flights = FlightsManager()  # INFO: usage: i.flights(manager='flights')
+    objects = FlightsManager()
 
 
 class KiwiException(TimeStampedModel):
     skyfly_request = models.ForeignKey(SkyflyRequest, on_delete=models.CASCADE, related_name='exceptions')
     exception_message = models.TextField()
     data = models.TextField()
+    traceback = models.TextField()

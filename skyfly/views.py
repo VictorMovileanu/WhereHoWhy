@@ -25,11 +25,20 @@ def submit(request):
     except AssertionError:
         return JsonResponse({'error_msg': 'Faulty submission data'}, status=400)
     else:
-        SkyflyRequest.objects.create(request_hash=request_hash)
         if destinations and dates:
-            query_kiwi.delay(request_hash, destinations, dates)
-        redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
-        return JsonResponse({'redirect_url': redirect_url})
+            SkyflyRequest.objects.create(request_hash=request_hash)
+            combinations = []
+            for destination in destinations:
+                for date in dates:
+                    combinations.append((request_hash, destination, date))
+            chunk_size = settings.SIMULTANEOUS_REQUESTS
+            for i in range(0, len(combinations), chunk_size):
+                chunk = combinations[i:i + chunk_size]
+                query_kiwi.delay(chunk)
+            redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
+            return JsonResponse({'redirect_url': redirect_url})
+        else:
+            JsonResponse({'error_msg': 'No data submitted!'}, status=400)
 
 
 def _generate_submission_data(request):
@@ -73,7 +82,7 @@ def _validate_dates(dates):
 
 def csv_serve_view(request, request_hash):
     response = HttpResponse(content_type='text/csv')
-    grouped_flights = SkyflyRequest.objects.get(request_hash=request_hash).flights(manager='flights').grouped_by_city()
+    grouped_flights = SkyflyRequest.objects.get(request_hash=request_hash).flights.grouped_by_city()
     response['Content-Disposition'] = f'attachment; filename="data.csv"'
     writer = csv.writer(response)
     writer.writerow(['label', 'y', 't0', 't1', 'delta_t', 'href', 'color', 'opacity'])
@@ -97,7 +106,7 @@ def skyfly_request(request, request_hash):
 
 def skyfly_request_info(request, request_hash):
     skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
-    if skyfly_request_object.completed:
+    if skyfly_request_object.left_combinations == 0:
         status = 'finished'
     else:
         status = 'running'

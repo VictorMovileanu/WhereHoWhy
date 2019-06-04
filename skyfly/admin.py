@@ -1,6 +1,9 @@
+import ast
+
 from django.contrib import admin
 
 from django.contrib.admin import register
+from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -24,7 +27,8 @@ class ExceptionInlineAdmin(admin.TabularInline):
         return self.model.objects.filter(exception_message=obj.exception_message).count()
 
     def json_data(self, obj):
-        return mark_safe('<a href="www.wikipedia.org">Download json</a>')
+        url = reverse('admin:kiwi_exception_json_download', kwargs={'pk': obj.pk})
+        return mark_safe(f'<a href="{url}" download>Download json</a>')
 
 
 @register(SkyflyRequest)
@@ -44,3 +48,17 @@ class SkyflyRequestAdmin(admin.ModelAdmin):
 
     def number_of_cities(self, obj):
         return obj.cities.count()
+
+    def kiwi_exception_json_download(self, request, pk):
+        data = ast.literal_eval(KiwiException.objects.get(pk=pk).data)
+        response = JsonResponse(data, content_type='application/json', json_dumps_params={'indent': 4}, safe=False)
+        response['Content-Disposition'] = 'inline; filename=data.json'
+        return response
+
+    def get_urls(self):
+        from django.urls import path
+        urls = super(SkyflyRequestAdmin, self).get_urls()
+        urls += [
+            path('download_json/<int:pk>', self.kiwi_exception_json_download, name='kiwi_exception_json_download')
+        ]
+        return urls

@@ -1,13 +1,14 @@
 from __future__ import absolute_import, unicode_literals
 
 import logging
+import traceback
 from datetime import datetime
 
 import pytz
 from billiard.pool import Pool
 from celery import shared_task
 import requests
-from django.utils import timezone
+from django.conf import settings
 
 from skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
 
@@ -47,7 +48,6 @@ def process_request(i):
         try:
             t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination['city'])
 
-            # TODO: add admin inline for flights
             KiwiResponse.objects.create(
                 skyfly_request=skyfly_request_object,
                 city=trip['cityTo'],
@@ -60,13 +60,16 @@ def process_request(i):
             )
 
         except Exception as e:
-            # TODO: add admin inlines for exceptions
             KiwiException.objects.create(
                 skyfly_request=skyfly_request_object,
                 exception_message=str(e),
-                data=trip
+                data=trip,
+                traceback=traceback.format_exc()
             )
             logger.exception(e)
+
+    skyfly_request_object.left_combinations -= 1
+    skyfly_request_object.save()
 
 
 def _calculate_flight_duration_information(trip, location, destination):
@@ -87,18 +90,8 @@ def _calculate_flight_duration_information(trip, location, destination):
     return t_departure_from_location, t_arrival_at_location, t_departure_from_destination - t_arrival_at_destination
 
 
-def f(request_hash, destinations, dates):
-    for destination in destinations:
-        for date in dates:
-            yield request_hash, destination, date
-
-
 @shared_task
-def query_kiwi(request_hash, destinations, dates):
+def query_kiwi(chunk):
 
-    pool = Pool(5)
-    iterable = f(request_hash, destinations, dates)
-    pool.map(process_request, iterable)
-    skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
-    skyfly_request_object.completed = timezone.now()
-    skyfly_request_object.save()
+    pool = Pool(settings.SIMULTANEOUS_REQUESTS)
+    pool.map(process_request, chunk)

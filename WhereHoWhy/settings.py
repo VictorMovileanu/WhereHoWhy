@@ -130,6 +130,7 @@ STATICFILES_DIRS = [
 ]
 
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+SIMULTANEOUS_REQUESTS = 5  # number of threads used to send requests to the kiwi API
 
 LOGGING = {
     'version': 1,
