@@ -8,76 +8,76 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.http import require_http_methods
+from django.views import View
 
 from skyfly.models import SkyflyRequest
 from .tasks import query_kiwi
 
 
-def app_index(request):
-    return render(request, 'skyfly/index.html')
+class IndexView(View):
 
+    def get(self, request):
+        return render(request, 'skyfly/index.html')
 
-@require_http_methods(['POST'])
-def submit(request):
-    try:
-        request_hash, destinations, dates = _generate_submission_data(request)
-    except AssertionError:
-        return JsonResponse({'error_msg': 'Faulty submission data'}, status=400)
-    else:
-        if destinations and dates:
-            SkyflyRequest.objects.create(request_hash=request_hash)
-            combinations = []
-            for destination in destinations:
-                for date in dates:
-                    combinations.append((request_hash, destination, date))
-            chunk_size = settings.SIMULTANEOUS_REQUESTS
-            for i in range(0, len(combinations), chunk_size):
-                chunk = combinations[i:i + chunk_size]
-                query_kiwi.delay(chunk)
-            redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
-            return JsonResponse({'redirect_url': redirect_url})
+    def post(self, request):
+        try:
+            data = json.loads(request.POST.get('data', ''))
+            request_hash, destinations, dates = self._generate_submission_data(data)
+        except AssertionError:
+            return JsonResponse({'error_msg': 'Faulty submission data'}, status=400)
         else:
-            JsonResponse({'error_msg': 'No data submitted!'}, status=400)
+            if destinations and dates:
+                combinations = []
+                for destination in destinations:
+                    for date in dates:
+                        combinations.append((request_hash, destination, date))
+                SkyflyRequest.objects.create(request_hash=request_hash, left_combinations=len(combinations))
 
+                chunk_size = settings.SIMULTANEOUS_REQUESTS
+                for i in range(0, len(combinations), chunk_size):
+                    chunk = combinations[i:i + chunk_size]
+                    query_kiwi.delay(chunk)
+                redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
+                return JsonResponse({'redirect_url': redirect_url})
+            else:
+                JsonResponse({'error_msg': 'No data submitted!'}, status=400)
 
-def _generate_submission_data(request):
-    data = json.loads(request.POST.get('data', ''))
-    destinations = data['destination-table']
-    dates = data['date-table']
+    def _generate_submission_data(self, data):
+        destinations = data['destination-table']
+        dates = data['date-table']
 
-    _validate_destinations(destinations)
-    _validate_dates(dates)
+        self._validate_destinations(destinations)
+        self._validate_dates(dates)
 
-    data.update({
-        'user': request.user,
-        'time': datetime.now()
-    })
-    request_hash = hash(str(data))
-    return request_hash, destinations, dates
+        data.update({
+            'user': 'changeme!',  # todo: change this
+            'time': datetime.now()
+        })
+        request_hash = hash(str(data))
+        return request_hash, destinations, dates
 
+    @staticmethod
+    def _validate_destinations(destinations):
+        with open(os.path.join(settings.BASE_DIR, 'static/data/iata_codes.json')) as json_file:
+            iata_code_list = json.load(json_file)
+        for dst in destinations:
+            assert dst['city'] in iata_code_list
+            assert type(dst['price']) == int
+            try:
+                int(dst['color'][1:3], 16)
+                int(dst['color'][3:5], 16)
+                int(dst['color'][5:], 16)
+            except ValueError:
+                raise AssertionError
 
-def _validate_destinations(destinations):
-    with open(os.path.join(settings.BASE_DIR, 'static/data/iata_codes.json')) as json_file:
-        iata_code_list = json.load(json_file)
-    for dst in destinations:
-        assert dst['city'] in iata_code_list
-        assert type(dst['price']) == int
-        try:
-            int(dst['color'][1:3], 16)
-            int(dst['color'][3:5], 16)
-            int(dst['color'][5:], 16)
-        except ValueError:
-            raise AssertionError
-
-
-def _validate_dates(dates):
-    for date in dates:
-        try:
-            datetime.strptime(date['from'], '%d/%m/%Y')
-            datetime.strptime(date['until'], '%d/%m/%Y')
-        except ValueError:
-            raise AssertionError
+    @staticmethod
+    def _validate_dates(dates):
+        for date in dates:
+            try:
+                datetime.strptime(date['from'], '%d/%m/%Y')
+                datetime.strptime(date['until'], '%d/%m/%Y')
+            except ValueError:
+                raise AssertionError
 
 
 def csv_serve_view(request, request_hash):
