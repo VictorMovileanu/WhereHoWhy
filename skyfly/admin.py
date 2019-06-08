@@ -37,7 +37,7 @@ class SkyflyRequestAdmin(admin.ModelAdmin):
     inlines = (ExceptionInlineAdmin, )
 
     def href(self, obj):
-        url = reverse('skyfly:request', kwargs={'request_hash': obj.request_hash})
+        url = reverse('skyfly:request', kwargs={'request_uuid': obj.unique_id})
         href = format_html(
             f'<a href={url}>{url}</a>'
         )

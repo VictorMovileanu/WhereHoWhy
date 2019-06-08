@@ -16,12 +16,12 @@ logger = logging.getLogger('skyfly')
 
 
 def process_request(i):
-    request_hash, destination, date = i
+    destination, date, request_uuid = i
 
     try:
-        skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
+        skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
     except SkyflyRequest.DoesNotExist:
-        raise Exception(f'SkyflyRequest object with hash {request_hash} does not exist')
+        raise Exception(f'SkyflyRequest object with hash {request_uuid} does not exist')
     # WARNING: question: does it make any sense to check for duplicate hashes?
 
     base_url = 'https://api.skypicker.com/'
@@ -70,6 +70,8 @@ def process_request(i):
 
     skyfly_request_object.left_combinations -= 1
     skyfly_request_object.save()
+
+    return skyfly_request_object
 
 
 def _calculate_flight_duration_information(trip, location, destination):

@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.db.models import F, Min, Max, FloatField, ExpressionWrapper
 
@@ -29,7 +31,7 @@ class FlightsManager(models.Manager):
 
 
 class SkyflyRequest(TimeStampedModel):
-    request_hash = models.CharField(max_length=255, unique=True)
+    unique_id = models.UUIDField(default=uuid.uuid1, unique=True, editable=False)
     start = models.CharField(max_length=3, default='MUC')
     left_combinations = models.PositiveIntegerField("Number of different date-destination combinations left to query")
 

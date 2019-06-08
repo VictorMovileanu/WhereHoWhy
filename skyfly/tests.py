@@ -9,8 +9,7 @@ from skyfly.tasks import query_kiwi
 class KiwiTest(TestCase):
 
     def test_kiwi_query(self):
-        request_hash = hash(self)
-        SkyflyRequest.objects.create(request_hash=request_hash)
+        skyfly_request_object = SkyflyRequest.objects.create()
         destinations = [
             {'city': 'CDG', 'price': 300, 'color': '#0b25f5'},  # Paris
             {'city': 'BUD', 'price': 300, 'color': '#13cc11'},  # Budapest
@@ -32,4 +31,4 @@ class KiwiTest(TestCase):
             for i in range(4)
         ]
         # INFO: no delay task
-        query_kiwi(request_hash, destinations, dates)
+        query_kiwi(destinations, dates, skyfly_request_object.unique_id)  # todo: fix test

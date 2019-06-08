@@ -22,7 +22,7 @@ class IndexView(View):
     def post(self, request):
         try:
             data = json.loads(request.POST.get('data', ''))
-            request_hash, destinations, dates = self._generate_submission_data(data)
+            destinations, dates = self._generate_submission_data(data)
         except AssertionError:
             return JsonResponse({'error_msg': 'Faulty submission data'}, status=400)
         else:
@@ -30,14 +30,15 @@ class IndexView(View):
                 combinations = []
                 for destination in destinations:
                     for date in dates:
-                        combinations.append((request_hash, destination, date))
-                SkyflyRequest.objects.create(request_hash=request_hash, left_combinations=len(combinations))
+                        combinations.append((destination, date))
+                skyfly_request_instance = SkyflyRequest.objects.create(left_combinations=len(combinations))
 
                 chunk_size = settings.SIMULTANEOUS_REQUESTS
                 for i in range(0, len(combinations), chunk_size):
                     chunk = combinations[i:i + chunk_size]
+                    chunk = [tup + (skyfly_request_instance.unique_id,) for tup in chunk]  # todo: refactor this
                     query_kiwi.delay(chunk)
-                redirect_url = reverse('skyfly:request', kwargs={'request_hash': request_hash})
+                redirect_url = reverse('skyfly:request', kwargs={'request_uuid': skyfly_request_instance.unique_id})
                 return JsonResponse({'redirect_url': redirect_url})
             else:
                 JsonResponse({'error_msg': 'No data submitted!'}, status=400)
@@ -49,12 +50,7 @@ class IndexView(View):
         self._validate_destinations(destinations)
         self._validate_dates(dates)
 
-        data.update({
-            'user': 'changeme!',  # todo: change this
-            'time': datetime.now()
-        })
-        request_hash = hash(str(data))
-        return request_hash, destinations, dates
+        return destinations, dates
 
     @staticmethod
     def _validate_destinations(destinations):
@@ -80,9 +76,9 @@ class IndexView(View):
                 raise AssertionError
 
 
-def csv_serve_view(request, request_hash):
+def csv_serve_view(request, request_uuid):
     response = HttpResponse(content_type='text/csv')
-    grouped_flights = SkyflyRequest.objects.get(request_hash=request_hash).flights.grouped_by_city()
+    grouped_flights = SkyflyRequest.objects.get(unique_id=request_uuid).flights.grouped_by_city()
     response['Content-Disposition'] = f'attachment; filename="data.csv"'
     writer = csv.writer(response)
     writer.writerow(['label', 'y', 't0', 't1', 'delta_t', 'href', 'color', 'opacity'])
@@ -100,12 +96,12 @@ def iata_codes_serve_view(request):
     return JsonResponse({'data': data})
 
 
-def skyfly_request(request, request_hash):
-    return render(request, 'skyfly/skyfly_request.html', {'request_hash': request_hash})
+def skyfly_request(request, request_uuid):
+    return render(request, 'skyfly/skyfly_request.html', {'request_uuid': request_uuid})
 
 
-def skyfly_request_info(request, request_hash):
-    skyfly_request_object = SkyflyRequest.objects.get(request_hash=request_hash)
+def skyfly_request_info(request, request_uuid):
+    skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
     if skyfly_request_object.left_combinations == 0:
         status = 'finished'
     else:
