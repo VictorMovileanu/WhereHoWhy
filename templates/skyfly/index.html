@@ -44,11 +44,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><input data-toggle="datepicker" id="time_from"></td>
-                <td><input data-toggle="datepicker" id="time_until"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><button class="js-addTimeFrame is-fullwidth" type="button">Save row and add a new one</button></td>
+                <td colspan="2"><input name="dates"></td>
             </tr>
         </tfoot>
     </table>
@@ -60,4 +56,21 @@
 
 {% block extra_js %}
     <script src="{% static 'js/skyfly.js' %}" type="text/javascript"></script>
+    <script>
+        $('input[name="dates"]').daterangepicker({
+            locale: {
+              format: 'DD/MM/YYYY'
+            }
+        }).on('apply.daterangepicker', function(ev, picker) {
+            const date_from = picker.startDate.format('DD/MM/YYYY');
+            const date_until = picker.endDate.format('DD/MM/YYYY');
+            const table_row =
+            `<tr class='data-row' data-from='${date_from}' data-until='${date_until}'>` +
+                `<td>${date_from}</td>` +
+                `<td>${date_until}</td>` +
+                `<td><button class='js-deleteRow' type='button'>X</button></td>` +
+            "</tr>";
+            $(this).closest('table').find('tbody').append(table_row);
+        });
+    </script>
 {% endblock %}
