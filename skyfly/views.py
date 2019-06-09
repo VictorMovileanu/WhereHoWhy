@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
+from skyfly import IATA_CODES
 from skyfly.models import SkyflyRequest
 from .tasks import query_kiwi
 
@@ -23,15 +24,18 @@ class IndexView(View):
         try:
             data = json.loads(request.POST.get('data', ''))
             destinations, dates = self._generate_submission_data(data)
+            assert data['city-from'] in IATA_CODES
         except AssertionError:
-            return JsonResponse({'error_msg': 'Faulty submission data'}, status=400)
+            return JsonResponse({'message': 'Faulty submission data'}, status=406)
         else:
             if destinations and dates:
                 combinations = []
                 for destination in destinations:
                     for date in dates:
                         combinations.append((destination, date))
-                skyfly_request_instance = SkyflyRequest.objects.create(left_combinations=len(combinations))
+
+                skyfly_request_instance = SkyflyRequest.objects.create(
+                    left_combinations=len(combinations), start=data['city-from'])
 
                 chunk_size = settings.SIMULTANEOUS_REQUESTS
                 for i in range(0, len(combinations), chunk_size):
@@ -41,7 +45,7 @@ class IndexView(View):
                 redirect_url = reverse('skyfly:request', kwargs={'request_uuid': skyfly_request_instance.unique_id})
                 return JsonResponse({'redirect_url': redirect_url})
             else:
-                JsonResponse({'error_msg': 'No data submitted!'}, status=400)
+                return JsonResponse({'message': 'No data submitted!'}, status=406)
 
     def _generate_submission_data(self, data):
         destinations = data['destination-table']
@@ -54,10 +58,8 @@ class IndexView(View):
 
     @staticmethod
     def _validate_destinations(destinations):
-        with open(os.path.join(settings.BASE_DIR, 'static/data/iata_codes.json')) as json_file:
-            iata_code_list = json.load(json_file)
         for dst in destinations:
-            assert dst['city'] in iata_code_list
+            assert dst['city'] in IATA_CODES
             assert type(dst['price']) == int
             try:
                 int(dst['color'][1:3], 16)

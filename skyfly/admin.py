@@ -33,7 +33,7 @@ class ExceptionInlineAdmin(admin.TabularInline):
 
 @register(SkyflyRequest)
 class SkyflyRequestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'href', 'number_of_flights', 'number_of_cities')
+    list_display = ('__str__', 'created', 'href', 'number_of_flights', 'number_of_cities')
     inlines = (ExceptionInlineAdmin, )
 
     def href(self, obj):

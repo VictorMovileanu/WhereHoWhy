@@ -1,0 +1,17 @@
+#skyfly-header span {
+    font-size: small;
+}
+
+#skyfly-header input {
+    border: none;
+    border-bottom: 1px solid black;
+    width: 3em;
+    font: inherit;
+    padding: 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#city {
+    text-transform: uppercase;
+}

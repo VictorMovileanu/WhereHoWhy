@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/skyfly.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<h1>Skyfly</h1>
+<h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" placeholder="MUC"></h1>
 <div>
     <form action=".">
     <table class="text-centered" id="destination-table">
@@ -18,7 +23,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><input type="text" id="city" name="#city"></td>
+                <td><input type="text" id="city"></td>
                 <td><input type="number" id="price"></td>
                 <td><input type="color" id="color"></td>
             </tr>
