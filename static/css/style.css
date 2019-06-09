@@ -36,3 +36,24 @@ a {
     display: table-cell;
     transform: translateX(50%);
 }
+
+.green {
+    color: green;
+}
+
+.acknowledgments {
+    font-size: 10px;
+    color: lightgrey;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.acknowledgments a {
+    color: grey;
+}
+
+.acknowledgments a:visited {
+    color: grey;
+}

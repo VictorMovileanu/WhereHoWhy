@@ -79,8 +79,11 @@ class IndexView(View):
 
 
 def csv_serve_view(request, request_uuid):
+    n = request.GET.get('n', None)
+    if n:
+        n = int(n)
     response = HttpResponse(content_type='text/csv')
-    grouped_flights = SkyflyRequest.objects.get(unique_id=request_uuid).flights.grouped_by_city()
+    grouped_flights = SkyflyRequest.objects.get(unique_id=request_uuid).flights.grouped_by_city(limit=n)
     response['Content-Disposition'] = f'attachment; filename="data.csv"'
     writer = csv.writer(response)
     writer.writerow(['label', 'y', 't0', 't1', 'delta_t', 'href', 'color', 'opacity'])
@@ -99,16 +102,12 @@ def iata_codes_serve_view(request):
 
 
 def skyfly_request(request, request_uuid):
-    return render(request, 'skyfly/skyfly_request.html', {'request_uuid': request_uuid})
-
-
-def skyfly_request_info(request, request_uuid):
     skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
-    if skyfly_request_object.left_combinations == 0:
-        status = 'finished'
-    else:
-        status = 'running'
-    return JsonResponse({'status': status})
+    context = {
+        'request_uuid': request_uuid,
+        'finished': (skyfly_request_object.left_combinations == 0)
+    }
+    return render(request, 'skyfly/skyfly_request.html', context)
 
 
 def _datetime_to_seconds(dt_object):

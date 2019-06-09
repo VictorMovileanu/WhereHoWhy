@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?lm2zp6');
-  src:  url('fonts/icomoon.eot?lm2zp6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?lm2zp6') format('truetype'),
-    url('fonts/icomoon.woff?lm2zp6') format('woff'),
-    url('fonts/icomoon.svg?lm2zp6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?heq6ul');
+  src:  url('fonts/icomoon.eot?heq6ul#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?heq6ul') format('truetype'),
+    url('fonts/icomoon.woff?heq6ul') format('woff'),
+    url('fonts/icomoon.svg?heq6ul#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -29,4 +29,16 @@
 }
 .icon-plane:before {
   content: "\e901";
+}
+.icon-switch:before {
+  content: "\e9b6";
+}
+.icon-checkmark:before {
+  content: "\ea10";
+}
+.icon-libreoffice:before {
+  content: "\eae3";
+}
+.icon-hour-glass:before {
+  content: "\e979";
 }

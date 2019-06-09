@@ -34,3 +34,18 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.scatter-control {
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 0 52px;
+}
+
+.scatter-control li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.scatter-control input {
+  width: 50px;
+}

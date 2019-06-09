@@ -20,36 +20,40 @@
 {% block content %}
     <div id="scatter-plot"></div>
 
-    <a href="{% url 'skyfly:request-csv-data' request_uuid %}">
-        <button>Download full data</button>
-    </a>
+    <ul class="scatter-control">
+        <li>Status: {% if finished %}<span class="icon-checkmark green"></span>{% else %}<span class="icon-hour-glass"></span>{% endif %}</li>
+        <li><label>Points per city:&nbsp;<input id="number-of-points" type="number" min="1" value="20" onchange="updateScatterPlot()"></label></li>
+    </ul>
+    <div class="scatter-control">
+        <a href="{% url 'skyfly:request-csv-data' request_uuid %}" download><button>Download full data</button></a>
+    </div>
+
+    <div class="acknowledgments">
+        <p>Plane icons designed by <a href="http://www.freepik.com"><strong>Freepik</strong></a> from <a href="http://www.flaticon.com"><strong>www.flaticon.com</strong></a></p>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="{% static 'js/scatter-plot.js' %}"></script>
     <script>
-        let intervalID = null;
-        const myScatterPlot = scatterPlot({
+        let myScatterPlot = scatterPlot({
             containerId: "scatter-plot",
-            dataURL: "{% url 'skyfly:request-csv-data' request_uuid %}"
+            dataURL: "{% url 'skyfly:request-csv-data' request_uuid %}?n=" + $('#number-of-points').val()
         });
-        $(document).ready(function () {
-            intervalID = setInterval(updateScatterPlot, 5000)
-        });
-
         function updateScatterPlot () {
-            $.ajax({
-                url: "{% url 'skyfly:request-info' request_uuid %}",
-                success: function (data) {
-                    if (data['status'] === 'running') {
-                        myScatterPlot.render();
-                    } else if (data['status'] === 'finished') {
-                        clearInterval(intervalID)
-                    }
-                }
-            })
+            const new_dataURL = "{% url 'skyfly:request-csv-data' request_uuid %}?n=" + $('#number-of-points').val();
+                d3.csv(new_dataURL).then(data => {
+                    data.forEach(d => {
+                        d.delta_t = +d.delta_t;
+                        d.y = +d.y;
+                        d.t0 = moment.unix(+d.t0);
+                        d.t1 = moment.unix(+d.t1);
+                        d.opacity = +d.opacity;
+                    });
+                    myScatterPlot.data = data;
+                    myScatterPlot.render();
+                });
         }
-
     </script>
 {% endblock %}
