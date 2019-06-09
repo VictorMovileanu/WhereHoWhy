@@ -43,7 +43,7 @@ $('.js-readTable').on("click", function () {
     * */
     const tableData = {};
     tableData['city-from'] = $('#city-from').val().toUpperCase();
-    $('table').each(function () {
+    $('.data-table').each(function () {
         let table_id = this.id;
         tableData[table_id] = [];
         $(`#${table_id} .data-row`).each(function () {

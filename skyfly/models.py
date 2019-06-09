@@ -9,7 +9,7 @@ from utils.abstract_models import TimeStampedModel
 class FlightsManager(models.Manager):
 
     def grouped_by_city(self, limit=10):
-        qs = super().get_queryset()
+        qs = super().get_queryset().filter(skyfly_request=self.instance)
         cities = super().get_queryset().distinct('city').values_list('city', flat=True)
         result = {}
         for city in cities:

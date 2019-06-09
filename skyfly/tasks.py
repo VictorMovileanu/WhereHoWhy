@@ -46,7 +46,7 @@ def process_request(i):
     for trip in resp.json()['data']:
 
         try:
-            t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip, loc, destination['city'])
+            t_departure, t_arrival, trip_duration = _calculate_flight_duration_information(trip)
 
             KiwiResponse.objects.create(
                 skyfly_request=skyfly_request_object,
@@ -74,22 +74,20 @@ def process_request(i):
     return skyfly_request_object
 
 
-def _calculate_flight_duration_information(trip, location, destination):
-    if destination == 'anywhere':
-        routes = trip['routes']
-        destination = routes[0][1]
+def _calculate_flight_duration_information(trip):
     route = trip['route']
-    i = 0
-    t_departure_from_location = route[0]['dTimeUTC']
-    while route[i]['flyTo'] != destination:
-        i += 1
-    t_arrival_at_destination = route[i]['aTimeUTC']
-    i += 1
-    t_departure_from_destination = route[i]['dTimeUTC']
-    while route[i]['flyTo'] != location:
-        i += 1
-    t_arrival_at_location = route[i]['aTimeUTC']
-    return t_departure_from_location, t_arrival_at_location, t_departure_from_destination - t_arrival_at_destination
+
+    t_departure = route[0]['dTimeUTC']
+    t_arrival = route[-1]['aTimeUTC']
+    t_departure_from_destination, t_arrival_at_destination = 0, 0
+
+    for i in range(len(route)):
+        if route[i]['return'] == 0 and route[i+1]['return'] != 0:
+            t_arrival_at_destination = route[i]['aTimeUTC']
+            t_departure_from_destination = route[i+1]['dTimeUTC']
+            break
+
+    return t_departure, t_arrival, t_departure_from_destination - t_arrival_at_destination
 
 
 @shared_task
