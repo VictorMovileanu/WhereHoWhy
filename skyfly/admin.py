@@ -44,7 +44,12 @@ class SkyflyRequestAdmin(admin.ModelAdmin):
         return href
 
     def number_of_flights(self, obj):
-        return obj.flights.count()
+        n_flights = obj.flights.count()
+        s = f'{n_flights}'
+        n_exceptions = obj.exceptions.count()
+        if n_exceptions:
+            s += f'&nbsp;<span style="color: red">({n_exceptions})</span>'
+        return format_html(s)
 
     def number_of_cities(self, obj):
         return obj.cities.count()
