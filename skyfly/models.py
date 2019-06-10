@@ -41,7 +41,8 @@ class SkyflyRequest(TimeStampedModel):
 
     def __str__(self):
         cities = list(self.cities.values_list('city', flat=True))
-        return f'Flights from {self.start} to {cities}'
+        cities = ', '.join(cities)
+        return f'{self.start} to {cities}'
 
 
 class KiwiResponse(TimeStampedModel):

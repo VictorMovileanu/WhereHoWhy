@@ -8,8 +8,7 @@
 {% block content %}
 
 <h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" placeholder="MUC"></h1>
-<div>
-    <form action=".">
+<div id="input-table">
     <table class="text-centered data-table" id="destination-table">
         <thead>
             <tr>
@@ -48,9 +47,32 @@
             </tr>
         </tfoot>
     </table>
-    </form>
     <button class="js-readTable">Submit</button>
 </div>
+
+    <div id="history-table">
+    <table>
+        <thead>
+        <tr>
+            <th>By</th>
+            <th>Time</th>
+            <th>Cities</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for skyfly_request in skyfly_requests %}
+        <tr>
+            <td>Anonymous</td>
+            <td>{{ skyfly_request.created }}</td>
+            <td class="cities"><a href="{% url 'skyfly:request' request_uuid=skyfly_request.unique_id %}">{{ skyfly_request|truncatechars:100 }}</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <ul>
+
+        </ul>
+    </div>
 
 {% endblock %}
 

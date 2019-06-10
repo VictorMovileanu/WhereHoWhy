@@ -18,7 +18,11 @@ from .tasks import query_kiwi
 class IndexView(View):
 
     def get(self, request):
-        return render(request, 'skyfly/index.html')
+        context = dict()
+        skyfly_requests = SkyflyRequest.objects.order_by('-created')
+        skyfly_requests = filter(lambda x: x.flights.count() != 0, skyfly_requests)
+        context['skyfly_requests'] = skyfly_requests
+        return render(request, 'skyfly/index.html', context)
 
     def post(self, request):
         try:
