@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontpage',
+    'skyfly',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,29 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+SIMULTANEOUS_REQUESTS = 5  # number of threads used to send requests to the kiwi API
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'skyfly.log'),
+        },
+    },
+    'loggers': {
+        'skyfly': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

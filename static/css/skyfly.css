@@ -1,0 +1,37 @@
+#skyfly-header span {
+    font-size: small;
+}
+
+#skyfly-header input {
+    border: none;
+    border-bottom: 1px solid black;
+    width: 3em;
+    font: inherit;
+    padding: 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#city {
+    text-transform: uppercase;
+}
+
+#input-table {
+    float: left;
+    display: inline-block;
+}
+
+#history-table {
+    float: right;
+    display: inline-block;
+    max-height: 300px;
+    overflow: auto;
+}
+
+#history-table tbody td.cities {
+    width: 500px;
+}
+
+#history-table td {
+    padding: 0 10px;
+}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/skyfly.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" placeholder="MUC"></h1>
+<div id="input-table">
+    <table class="text-centered data-table" id="destination-table">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Price</th>
+                <th>Color</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# here comes the dynamicly added content #}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="city"></td>
+                <td><input type="number" id="price"></td>
+                <td><input type="color" id="color"></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    <table class="text-centered data-table" id="date-table">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {# here comes the dynamicly added content #}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><input name="dates"></td>
+            </tr>
+        </tfoot>
+    </table>
+    <button class="js-readTable">Submit</button>
+</div>
+
+    <div id="history-table">
+    <table>
+        <thead>
+        <tr>
+            <th>By</th>
+            <th>Time</th>
+            <th>Cities</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for skyfly_request in skyfly_requests %}
+        <tr>
+            <td>Anonymous</td>
+            <td>{{ skyfly_request.created }}</td>
+            <td class="cities"><a href="{% url 'skyfly:request' request_uuid=skyfly_request.unique_id %}">{{ skyfly_request|truncatechars:100 }}</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <ul>
+
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/skyfly.js' %}" type="text/javascript"></script>
+    <script>
+        $('input[name="dates"]').daterangepicker({
+            locale: {
+              format: 'DD/MM/YYYY'
+            }
+        }).on('apply.daterangepicker', function(ev, picker) {
+            const date_from = picker.startDate.format('DD/MM/YYYY');
+            const date_until = picker.endDate.format('DD/MM/YYYY');
+            const table_row =
+            `<tr class='data-row' data-from='${date_from}' data-until='${date_until}'>` +
+                `<td>${date_from}</td>` +
+                `<td>${date_until}</td>` +
+                `<td><button class='js-deleteRow' type='button'>X</button></td>` +
+            "</tr>";
+            $(this).closest('table').find('tbody').append(table_row);
+        });
+    </script>
+{% endblock %}
