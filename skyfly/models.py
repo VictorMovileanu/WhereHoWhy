@@ -10,7 +10,7 @@ class FlightsManager(models.Manager):
 
     def grouped_by_city(self, limit=10):
         qs = super().get_queryset().filter(skyfly_request=self.instance)
-        cities = super().get_queryset().distinct('city').values_list('city', flat=True)
+        cities = qs.distinct('city').values_list('city', flat=True)
         result = {}
         for city in cities:
             sub_qs = qs.filter(city=city)
