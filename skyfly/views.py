@@ -28,9 +28,9 @@ class IndexView(View):
         try:
             data = json.loads(request.POST.get('data', ''))
             destinations, dates = self._generate_submission_data(data)
-            assert data['city-from'] in IATA_CODES
-        except AssertionError:
-            return JsonResponse({'message': 'Faulty submission data'}, status=406)
+            assert data['city-from'] in IATA_CODES, 'Enter a valid IATA code for the departure airport'
+        except AssertionError as e:
+            return JsonResponse({'message': str(e)}, status=406)
         else:
             if destinations and dates:
                 combinations = []
@@ -63,14 +63,14 @@ class IndexView(View):
     @staticmethod
     def _validate_destinations(destinations):
         for dst in destinations:
-            assert dst['city'] in IATA_CODES
-            assert type(dst['price']) == int
+            assert dst['city'] in IATA_CODES, f'{dst["city"]} is not a valid destination'
+            assert type(dst['price']) == int, f'{dst["price"]} is not a valid price'
             try:
                 int(dst['color'][1:3], 16)
                 int(dst['color'][3:5], 16)
                 int(dst['color'][5:], 16)
             except ValueError:
-                raise AssertionError
+                raise AssertionError(f'{dst["color"]} is not a valid color code')
 
     @staticmethod
     def _validate_dates(dates):
@@ -79,7 +79,7 @@ class IndexView(View):
                 datetime.strptime(date['from'], '%d/%m/%Y')
                 datetime.strptime(date['until'], '%d/%m/%Y')
             except ValueError:
-                raise AssertionError
+                raise AssertionError(f"{date['from']} or {date['until']} has no valid format")
 
 
 def csv_serve_view(request, request_uuid):

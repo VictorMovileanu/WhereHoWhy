@@ -7,9 +7,9 @@
 
 {% block content %}
 
-<h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" placeholder="MUC"></h1>
+<h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" value="MUC"></h1>
 <div id="input-table">
-    <form action=".">
+    <form action="." method="post">
         {% csrf_token %}
         <table class="text-centered data-table" id="destination-table">
             <thead>
