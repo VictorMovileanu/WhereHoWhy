@@ -61,8 +61,8 @@ function submitData(data) {
         success: function (data) {
             window.location.href = data['redirect_url']
         },
-        error: function (xhr) {
-            alert(xhr.responseJSON['message'])
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.responseJSON['message'])
         }
     })
 }
