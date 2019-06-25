@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from frontpage.views import frontpage
+from frontpage import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', frontpage, name='frontpage'),
+    path('', views.frontpage, name='frontpage'),
+    path('knowledge-tree/', views.knowledge_tree, name='knowledge-tree'),
+    path('quotes/', views.quotes, name='quotes'),
     path('skyfly/', include('skyfly.urls', namespace='skyfly'))
 ]

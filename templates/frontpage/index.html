@@ -1,32 +1,13 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+
 {% block content %}
 
 <div class="container">
 
-    <object style="width: 100%" data="{% static 'img/KnowledgeTree.svg' %}" type="image/svg+xml" id="knowledge_map">Your browser does not support SVG</object>
+    <h1>Projects</h1>
 
-    <h1>Tweets</h1>
-    {% if request.user.is_authenticated %}
-        <form action="." method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">post</button>
-        </form>
-        <h2>Preview</h2>
-        <div class="tweet preview">
-            <blockquote></blockquote>
-            <cite></cite>
-        </div>
-        <hr>
-    {% endif %}
+    <h2><a href="{% url 'skyfly:index' %}">Skyfly</a></h2>
 
-    {% for tweet in tweets %}
-        <div class="tweet">
-            <p>{{ tweet.created }}</p>
-            <blockquote>{{ tweet.quote }}</blockquote>
-            <cite>{{ tweet.source|safe }}</cite>
-        </div>
-    {% endfor %}
 </div>
 {% endblock %}
