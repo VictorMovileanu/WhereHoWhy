@@ -10,10 +10,16 @@
 {% block extra_js %}
 
     <script>
-        $('a').click(function () {
-            event.preventDefault();
-            console.log('click')
-        })
+        window.onload=function () {
+            // https://benfrain.com/selecting-svg-inside-tags-with-javascript/
+            var svg = document.getElementById("knowledge_map");
+            var svgDoc = svg.contentDocument;
+            var anchors = svgDoc.getElementsByTagName('a');
+            let a;
+            for (a of anchors) {
+                a.setAttribute('target', '_blank')
+            }
+        };
     </script>
 
 {% endblock %}
