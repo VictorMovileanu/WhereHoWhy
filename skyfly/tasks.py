@@ -4,6 +4,7 @@ import logging
 import traceback
 from datetime import datetime
 
+from dateutil import parser
 import pytz
 from billiard.pool import Pool
 from celery import shared_task
@@ -24,10 +25,6 @@ def process_request(i):
         raise Exception(f'SkyflyRequest object with hash {request_uuid} does not exist')
     # WARNING: question: does it make any sense to check for duplicate hashes?
 
-    base_url = 'https://api.skypicker.com/'
-    flights = base_url + 'flights'
-    loc = 'MUC'
-
     parameters = {
         'date_from': date['from'],
         'date_to': date['from'],
@@ -41,7 +38,7 @@ def process_request(i):
     }
 
     logger.debug(f'Querying Kiwi with the parameters: {parameters}')
-    resp = requests.get(flights, params=parameters)
+    resp = requests.get(settings.KIWI_SEARCH_URL, params=parameters, headers={'apikey': settings.KIWI_API_KEY})
 
     for trip in resp.json()['data']:
 
@@ -77,14 +74,16 @@ def process_request(i):
 def _calculate_flight_duration_information(trip):
     route = trip['route']
 
-    t_departure = route[0]['dTimeUTC']
-    t_arrival = route[-1]['aTimeUTC']
+    def parse_time(s):
+        return parser.parse(s).timestamp()
+    t_departure = parse_time(route[0]['local_departure'])
+    t_arrival = parse_time(route[-1]['local_arrival'])
     t_departure_from_destination, t_arrival_at_destination = 0, 0
 
     for i in range(len(route)):
         if route[i]['return'] == 0 and route[i+1]['return'] != 0:
-            t_arrival_at_destination = route[i]['aTimeUTC']
-            t_departure_from_destination = route[i+1]['dTimeUTC']
+            t_arrival_at_destination = parse_time(route[i]['utc_arrival'])
+            t_departure_from_destination = parse_time(route[i+1]['utc_departure'])
             break
 
     return t_departure, t_arrival, t_departure_from_destination - t_arrival_at_destination
