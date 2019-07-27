@@ -157,3 +157,9 @@ LOGGING = {
 
 KIWI_API_KEY = config('KIWI_API_KEY')
 KIWI_SEARCH_URL = 'https://kiwicom-prod.apigee.net/v2/search'
+
+EMAIL_HOST = 'smtp.eu.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
