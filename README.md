@@ -1,5 +1,3 @@
-# Installation
-
 #### Deployment
 * pull code
 * optional: collect static files
@@ -13,7 +11,7 @@
 * Gunicorn: `$HOME/logs/gunicorn.log`
 
 #### Setup
-Follow instructions on [https://simpleisbetterthancomplex.com/](https://simpleisbetterthancomplex.com/series/2017/10/16/a-complete-beginners-guide-to-django-part-7.html)
+Follow instructions from [here](https://simpleisbetterthancomplex.com/series/2017/10/16/a-complete-beginners-guide-to-django-part-7.html)
 and in INSTALLATION.md.
 
 #### Celery
