@@ -35,3 +35,14 @@
 #history-table td {
     padding: 0 10px;
 }
+
+.date-input,
+.city-input {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.date-input button,
+.city-input button {
+    font-size: 9px;
+}

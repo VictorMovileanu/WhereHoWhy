@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?heq6ul');
-  src:  url('fonts/icomoon.eot?heq6ul#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?heq6ul') format('truetype'),
-    url('fonts/icomoon.woff?heq6ul') format('woff'),
-    url('fonts/icomoon.svg?heq6ul#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?gczvp6');
+  src:  url('fonts/icomoon.eot?gczvp6#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?gczvp6') format('truetype'),
+    url('fonts/icomoon.woff?gczvp6') format('woff'),
+    url('fonts/icomoon.svg?gczvp6#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -41,4 +41,19 @@
 }
 .icon-hour-glass:before {
   content: "\e979";
+}
+.icon-calendar:before {
+  content: "\e953";
+}
+.icon-stats-dots:before {
+  content: "\e99b";
+}
+.icon-plus:before {
+  content: "\ea0a";
+}
+.icon-minus:before {
+  content: "\ea0b";
+}
+.icon-mail:before {
+  content: "\ea83";
 }

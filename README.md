@@ -19,3 +19,8 @@ Start worker with:
 ```
 celery -A WhereHoWhy worker
 ```
+
+# TODO: watch these links
+* https://stackoverflow.com/questions/43409658/how-to-implement-a-price-range-slider
+* https://bootsnipp.com/snippets/M52Gl
+* JSCROLL
