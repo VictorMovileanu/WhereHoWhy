@@ -11,24 +11,36 @@
         <div class="text-centered">
             <img src="{% static 'img/eagle.png' %}" alt=""> {# https://de.pngtree.com/freepng/eagle_1978481.html #}
             <h1>From</h1>
-            <div class="input-group city-input">
-                <input type="text" class="form-control">
-                <div class="input-group-append">
-                    <button class="btn" type="submit"><span class="icon-plus"></span></button>
+            <div class="input-group__from-city">
+                <div class="input-group city-input mb-2">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
+                        <button class="btn btn__remove" type="submit"><span class="icon-minus"></span></button>
+                    </div>
                 </div>
             </div>
+
             <h2 class="mt-3">To</h2>
-            <div class="input-group city-input">
-                <input type="text" class="form-control">
-                <div class="input-group-append">
-                    <button class="btn" type="submit"><span class="icon-plus"></span></button>
+            <div class="input-group__to-city">
+                <div class="input-group city-input mb-2">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
+                        <button class="btn btn__remove" type="submit"><span class="icon-minus"></span></button>
+                    </div>
                 </div>
             </div>
+
             <h2 class="mt-3">When?</h2>
-            <div class="input-group date-input">
-                <input name="dates" type="text" class="form-control js-datepickerInput">
-                <div class="input-group-append">
-                    <button class="btn js-datepicker" type="submit"><span class="icon-calendar" style="font-size: 14px"></span></button>
+            <div class="input-group__date">
+                <div class="input-group date-input mb-2">
+                    <input name="dates" type="text" class="form-control js-datepickerInput">
+                    <div class="input-group-append">
+                        <button class="btn js-datepicker" type="submit"><span class="icon-calendar" style="font-size: 14px"></span></button>
+                        <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
+                        <button class="btn btn__remove" type="submit"><span class="icon-minus"></span></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,6 +125,18 @@
     <script>
         $('body').on('click', '.js-datepicker', function () {
            $(this).parents().prev('.js-datepickerInput').click()
+        });
+
+        $('body').on('click', '.btn__add', function () {
+            const inputGroup = $(this).closest(".input-group");
+            inputGroup.clone().appendTo(inputGroup.parent())
+        });
+
+        $('body').on('click', '.btn__remove', function () {
+            const inputGroup = $(this).closest(".input-group");
+            if (inputGroup.parent().children('.input-group').length > 1) {
+                inputGroup.remove()
+            }
         });
 
         $('input[name="dates"]').daterangepicker({

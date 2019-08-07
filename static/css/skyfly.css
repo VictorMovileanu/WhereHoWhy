@@ -45,4 +45,5 @@
 .date-input button,
 .city-input button {
     font-size: 9px;
+    border: 1px solid darkgray;
 }
