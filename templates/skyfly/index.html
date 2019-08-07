@@ -129,7 +129,8 @@
 
         $('body').on('click', '.btn__add', function () {
             const inputGroup = $(this).closest(".input-group");
-            inputGroup.clone().appendTo(inputGroup.parent())
+            inputGroup.clone().appendTo(inputGroup.parent());
+            initDatePicker()
         });
 
         $('body').on('click', '.btn__remove', function () {
@@ -139,15 +140,20 @@
             }
         });
 
-        $('input[name="dates"]').daterangepicker({
-            locale: {
-              format: 'DD/MM/YYYY'
-            }
-        }).on('apply.daterangepicker', function(ev, picker) {
-            const date_from = picker.startDate.format('DD/MM/YYYY');
-            const date_until = picker.endDate.format('DD/MM/YYYY');
-            $(this).attr('data-from', date_from);
-            $(this).attr('data-until', date_until);
-        });
+        function initDatePicker () {
+            $('input[name="dates"]').daterangepicker({
+                locale: {
+                  format: 'DD/MM/YYYY'
+                }
+            }).on('apply.daterangepicker', function(ev, picker) {
+                const date_from = picker.startDate.format('DD/MM/YYYY');
+                const date_until = picker.endDate.format('DD/MM/YYYY');
+                $(this).attr('data-from', date_from);
+                $(this).attr('data-until', date_until);
+            });
+        }
+
+        initDatePicker()
+
     </script>
 {% endblock %}
