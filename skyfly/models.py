@@ -32,7 +32,6 @@ class FlightsManager(models.Manager):
 
 class SkyflyRequest(TimeStampedModel):
     unique_id = models.UUIDField(default=uuid.uuid1, unique=True, editable=False)
-    start = models.CharField(max_length=3, default='MUC')
     left_combinations = models.PositiveIntegerField("Number of different date-destination combinations left to query")
 
     @property
@@ -40,9 +39,7 @@ class SkyflyRequest(TimeStampedModel):
         return self.flights.distinct('city')
 
     def __str__(self):
-        cities = list(self.cities.values_list('city', flat=True))
-        cities = ', '.join(cities)
-        return f'{self.start} to {cities}'
+        return "SkyflyRequest ({})".format(self.created.strftime("%d/%m/%Y %h:%m"))
 
 
 class KiwiResponse(TimeStampedModel):

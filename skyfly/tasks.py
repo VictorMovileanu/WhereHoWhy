@@ -17,7 +17,12 @@ logger = logging.getLogger('skyfly')
 
 
 def process_request(i):
-    destination, date, request_uuid = i
+    """
+    We get here a tuple that contains the following: ('city-from', 'city-to', 'date-range', SkyflyRequest-uuid)
+    :param i: Example: ('MUC', 'LUX', '11/08/2019 - 14/08/2019', 1235-12345-12354-1234-1234)
+    :return: None. Results are saved to database
+    """
+    start, destination, date, request_uuid = i
 
     try:
         skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
@@ -30,11 +35,9 @@ def process_request(i):
         'date_to': date['from'],
         'return_from': date['until'],
         'return_to': date['until'],
-        'fly_from': 'MUC',
-        'fly_to': destination['city'],
+        'fly_from': start,
+        'fly_to': destination['code'],
         'partner': 'picky',
-        'curr': 'EUR',
-        'price_to': destination['price'],
     }
 
     logger.debug(f'Querying Kiwi with the parameters: {parameters}')
@@ -91,6 +94,11 @@ def _calculate_flight_duration_information(trip):
 
 @shared_task
 def query_kiwi(chunk):
+    """
+    Distribute queries on multiple threads.
+    The chunk is a list of tuples with following content:
+    ('city-from', 'city-to', 'date-range', SkyflyRequest-uuid)
+    """
 
     pool = Pool(settings.SIMULTANEOUS_REQUESTS)
     pool.map(process_request, chunk)
