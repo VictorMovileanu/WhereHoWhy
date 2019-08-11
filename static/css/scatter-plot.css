@@ -17,7 +17,7 @@
   fill: #000;
 }
 
-.scatter-plot .tooltip--rect {
+.scatter-plot .tooltipBox--rect {
   stroke: #000;
   fill: #fff;
 }
@@ -26,11 +26,11 @@
   cursor: pointer;
 }
 
-.scatter-plot .tooltip--header {
+.scatter-plot .tooltipBox--header {
   font-weight: bold;
 }
 
-.scatter-plot .tooltip--link {
+.scatter-plot .tooltipBox--link {
   text-decoration: underline;
   cursor: pointer;
 }

@@ -119,7 +119,7 @@ function scatterPlot(options) {
           if (!d.freezed) return;
           d.freezed = false;
           d3.select(this).classed("freezed", false);
-          d.tooltip.select(".tooltip").style("display", "none");
+          d.tooltip.select(".tooltipBox").style("display", "none");
         });
       });
 
@@ -146,11 +146,11 @@ function scatterPlot(options) {
       .each(d => (d.freezed = false));
 
     gTooltip = gTooltips
-      .selectAll(".tooltip-node")
+      .selectAll(".tooltipBox-node")
       .data(chart.data)
       .enter()
       .append("g")
-      .attr("class", "tooltip-node")
+      .attr("class", "tooltipBox-node")
       .attr("transform", d => `translate(${d.xPos},${d.yPos})`)
       .each(function(d) {
         d.tooltip = d3.select(this);
@@ -165,24 +165,24 @@ function scatterPlot(options) {
       .each(function(d) {
         d.tooltip
           .call(renderTooltip, d)
-          .select(".tooltip")
+          .select(".tooltipBox")
           .style("display", "none");
       })
       .on("mouseover", function(d) {
         if (d.freezed) return;
-        d.tooltip.select(".tooltip").style("display", "block");
+        d.tooltip.select(".tooltipBox").style("display", "block");
       })
       .on("mouseout", function(d) {
         if (d.freezed) return;
-        d.tooltip.select(".tooltip").style("display", "none");
+        d.tooltip.select(".tooltipBox").style("display", "none");
       })
       .on("click", function(d) {
         d.freezed = !d.freezed;
         d3.select(this).classed("freezed", d.freezed);
         if (!d.freezed) {
-          d.tooltip.select(".tooltip").style("display", "none");
+          d.tooltip.select(".tooltipBox").style("display", "none");
         } else {
-          d.tooltip.select(".tooltip").style("display", "block");
+          d.tooltip.select(".tooltipBox").style("display", "block");
         }
       });
   };
@@ -208,14 +208,14 @@ function scatterPlot(options) {
   const iconSize = 15;
   const iconRowOffset = 50;
   function renderTooltip(g, d) {
-    const tooltip = g.append("g").attr("class", "tooltip");
+    const tooltip = g.append("g").attr("class", "tooltipBox");
     tooltip.attr(
       "transform",
       `translate(${-tooltipWidth / 2},${-tooltipHeight - circleRadius})`
     );
     tooltip
       .append("rect")
-      .attr("class", "tooltip--rect")
+      .attr("class", "tooltipBox--rect")
       .attr("x", 0)
       .attr("y", 0)
       .attr("rx", 6)
@@ -223,11 +223,11 @@ function scatterPlot(options) {
       .attr("height", tooltipHeight);
 
     const row = tooltip
-      .selectAll(".tooltip--row")
+      .selectAll(".tooltipBox--row")
       .data(d3.range(tooltipRows))
       .enter()
       .append("g")
-      .attr("class", "tooltip--row")
+      .attr("class", "tooltipBox--row")
       .attr(
         "transform",
         i => `translate(0,${(i + 0.5) * tooltipRowHeight + tooltipPadding})`
@@ -237,7 +237,7 @@ function scatterPlot(options) {
     row
       .filter(i => i === 0)
       .append("text")
-      .attr("class", "tooltip--header")
+      .attr("class", "tooltipBox--header")
       .attr("x", tooltipWidth / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")
@@ -281,7 +281,7 @@ function scatterPlot(options) {
     row
       .filter(i => i === 3)
       .append("text")
-      .attr("class", "tooltip--link")
+      .attr("class", "tooltipBox--link")
       .attr("x", tooltipWidth / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")

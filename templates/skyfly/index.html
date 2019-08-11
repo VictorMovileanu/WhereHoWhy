@@ -7,7 +7,7 @@
 
 {% block content %}
     <form method="post">
-    {% csrf_token %}
+        {% csrf_token %}
         <div class="container">
             <div class="text-centered">
                 <img src="{% static 'img/eagle.png' %}" alt=""> {# https://de.pngtree.com/freepng/eagle_1978481.html #}
@@ -38,7 +38,9 @@
                     <div class="input-group date-input mb-2">
                         <input name="flight-date_0" type="text" class="form-control js-datepickerInput">
                         <div class="input-group-append">
-                            <button class="btn js-datepickerButton" type="button"><span class="icon-calendar" style="font-size: 14px"></span></button>
+                            <button class="btn js-datepickerButton" type="button"><span class="icon-calendar"
+                                                                                        style="font-size: 14px"></span>
+                            </button>
                             <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
                             <button class="btn btn__remove" type="submit"><span class="icon-minus"></span></button>
                         </div>
@@ -46,81 +48,8 @@
                 </div>
             </div>
         </div>
-    <button type="submit">Go</button>
+        <button type="submit">Go</button>
     </form>
-
-<h1 id="skyfly-header">Skyfly <span>from</span> <input id="city-from" type="text" value="MUC"></h1>
-<div id="input-table">
-    <form action="." method="post">
-        {% csrf_token %}
-        <table class="text-centered data-table" id="destination-table">
-            <thead>
-            <tr>
-                <th>City</th>
-                <th>Price</th>
-                <th>Color</th>
-            </tr>
-            </thead>
-            <tbody>
-            {# here comes the dynamicly added content #}
-            </tbody>
-            <tfoot>
-            <tr>
-                <td><input type="text" id="city"></td>
-                <td><input type="number" id="price"></td>
-                <td><input type="color" id="color"></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <button class="js-addDestination is-fullwidth" type="button">Save row and add a new one</button>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-        <table class="text-centered data-table" id="date-table">
-            <thead>
-            <tr>
-                <th>From</th>
-                <th>To</th>
-            </tr>
-            </thead>
-            <tbody>
-            {# here comes the dynamicly added content #}
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="2"><input name="dates"></td>
-            </tr>
-            </tfoot>
-        </table>
-    </form>
-    <button class="js-readTable">Submit</button>
-</div>
-
-    <div id="history-table">
-    <table>
-        <thead>
-        <tr>
-            <th>By</th>
-            <th>Time</th>
-            <th>Cities</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for skyfly_request in skyfly_requests %}
-        <tr>
-            <td>Anonymous</td>
-            <td>{{ skyfly_request.created }}</td>
-            <td class="cities"><a href="{% url 'skyfly:request' request_uuid=skyfly_request.unique_id %}">{{ skyfly_request|truncatechars:100 }}</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        <ul>
-
-        </ul>
-    </div>
-
 {% endblock %}
 
 {% block extra_js %}
