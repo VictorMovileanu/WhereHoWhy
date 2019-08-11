@@ -10,6 +10,7 @@ from billiard.pool import Pool
 from celery import shared_task
 import requests
 from django.conf import settings
+from django.db import transaction
 
 from skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
 
@@ -68,8 +69,10 @@ def process_request(i):
             )
             logger.exception(e)
 
-    skyfly_request_object.left_combinations -= 1
-    skyfly_request_object.save()
+    with transaction.atomic():
+        entry = SkyflyRequest.objects.select_for_update().get(unique_id=request_uuid)
+        entry.left_combinations -= 1
+        entry.save()
 
     return skyfly_request_object
 

@@ -33,10 +33,15 @@ class FlightsManager(models.Manager):
 class SkyflyRequest(TimeStampedModel):
     unique_id = models.UUIDField(default=uuid.uuid1, unique=True, editable=False)
     left_combinations = models.PositiveIntegerField("Number of different date-destination combinations left to query")
+    length_combinations = models.PositiveIntegerField("Number of different date-destination combinations")
 
     @property
     def cities(self):
         return self.flights.distinct('city')
+
+    @property
+    def progress(self):
+        return str(round((self.length_combinations - self.left_combinations) / self.length_combinations * 100, 0)) + "%"
 
     def __str__(self):
         return "SkyflyRequest ({})".format(self.created.strftime("%d/%m/%Y %h:%m"))

@@ -38,7 +38,10 @@ class IndexView(View):
                         if start != destination:
                             combinations.append((start, destination, date))
 
-            skyfly_request_instance = SkyflyRequest.objects.create(left_combinations=len(combinations))
+            skyfly_request_instance = SkyflyRequest.objects.create(
+                left_combinations=len(combinations),
+                length_combinations=len(combinations),
+            )
 
             if settings.SIMULTANEOUS_REQUESTS:
                 chunk_size = settings.SIMULTANEOUS_REQUESTS
@@ -49,8 +52,8 @@ class IndexView(View):
             else:
                 for i in list(map(lambda x: x + (skyfly_request_instance.unique_id,), combinations)):
                     process_request(i)
-            redirect_url = reverse('skyfly:request', kwargs={'request_uuid': skyfly_request_instance.unique_id})
-            return JsonResponse({'redirect_url': redirect_url})
+            status_url = reverse('skyfly:request-status', kwargs={'request_uuid': skyfly_request_instance.unique_id})
+            return JsonResponse({'status-url': status_url})
 
     def _parse_and_validate_submitted_data(self, data):
         cities_from = [data[key] for key in data.keys() if key.startswith('city-from')]
@@ -121,6 +124,12 @@ def skyfly_request(request, request_uuid):
         'finished': (skyfly_request_object.left_combinations == 0)
     }
     return render(request, 'skyfly/skyfly_request.html', context)
+
+
+def skyfly_request_status(request, request_uuid):
+    skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
+    progress = skyfly_request_object.progress
+    return JsonResponse({'progress': progress})
 
 
 def _datetime_to_seconds(dt_object):
