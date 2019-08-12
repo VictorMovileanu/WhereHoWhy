@@ -2,6 +2,7 @@ import csv
 import json
 import os
 import random
+from collections import defaultdict
 from datetime import datetime
 
 import pytz
@@ -18,6 +19,10 @@ from .tasks import query_kiwi, process_request
 
 class IndexView(View):
 
+    def __init__(self, **kwargs):
+        super(IndexView, self).__init__(**kwargs)
+        self.errors = defaultdict(list)
+
     def get(self, request):
         context = dict()
         skyfly_requests = SkyflyRequest.objects.order_by('-created')
@@ -26,10 +31,9 @@ class IndexView(View):
         return render(request, 'skyfly/index.html', context)
 
     def post(self, request):
-        try:
-            cities_from, cities_to, flight_dates = self._parse_and_validate_submitted_data(request.POST)
-        except AssertionError as e:
-            return JsonResponse({'message': str(e)}, status=406)
+        cities_from, cities_to, flight_dates = self._parse_and_validate_submitted_data(request.POST)
+        if self.errors:
+            return JsonResponse(self.errors, status=400)
         else:
             combinations = []
             for start in cities_from:
@@ -56,42 +60,47 @@ class IndexView(View):
             return JsonResponse({'status-url': status_url})
 
     def _parse_and_validate_submitted_data(self, data):
-        cities_from = [data[key] for key in data.keys() if key.startswith('city-from')]
-        cities_to = [self._parse_destination(data[key]) for key in data.keys() if key.startswith('city-to')]
-        flight_dates = [self._parse_date_range(data[key]) for key in data.keys() if key.startswith('flight-date')]
+        cities_from = [self._parse_location(data, key) for key in data.keys() if key.startswith('city-from')]
+        cities_to = [self._parse_location(data, key) for key in data.keys() if key.startswith('city-to')]
+        flight_dates = [self._parse_date_range(data, key) for key in data.keys() if key.startswith('flight-date')]
 
-        assert len(cities_from) > 0
-        assert len(cities_to) > 0
-        assert len(flight_dates) > 0
+        cities_from = list(filter(None, cities_from))
+        cities_to = [{'code': code, 'color': pick_random_color()} for code in filter(None, cities_to)]
+        flight_dates = list(filter(None, flight_dates))
 
-        for city in cities_from:
-            self._validate_destination(city)
-        for city in cities_to:
-            self._validate_destination(city['code'])
-
+        for ary, label in [(cities_from, 'start location'), (cities_to, 'destination'), (flight_dates, 'date range')]:
+            if not len(ary) > 0:
+                self.errors['non-field-errors'].append('At least one {} is required'.format(label))
         return cities_from, cities_to, flight_dates
 
     @staticmethod
-    def _validate_destination(destination):
-        assert destination in IATA_CODES
+    def _validate_location(location):
+        assert location in IATA_CODES
 
-    @staticmethod
-    def _parse_destination(inp):
-        return {
-            'code': inp,
-            'color': pick_random_color()
-        }
+    def _parse_location(self, data, key):
+        try:
+            self._validate_location(data[key])
+            return data[key]
+        except AssertionError:
+            self.errors['input-errors'].append({
+                'input_name': key,
+                'message': 'Invalid location'
+            })
+            return None
 
-    @staticmethod
-    def _parse_date_range(date):
+    def _parse_date_range(self, data, key):
+        date = data[key]
         date_from, date_until = map(lambda x: x.strip(), date.split("-"))
         try:
             datetime.strptime(date_from, '%d/%m/%Y')
             datetime.strptime(date_until, '%d/%m/%Y')
-        except ValueError:
-            raise AssertionError(f"{date_from} or {date_until} has no valid format")
-        else:
             return {'from': date_from, 'until': date_until}
+        except ValueError:
+            self.errors.append({
+                'input_id': key,
+                'message': 'Invalid date range format'
+            })
+            return None
 
 
 def csv_serve_view(request, request_uuid):
@@ -127,9 +136,10 @@ def skyfly_request(request, request_uuid):
 
 
 def skyfly_request_status(request, request_uuid):
-    skyfly_request_object = SkyflyRequest.objects.get(unique_id=request_uuid)
-    progress = skyfly_request_object.progress
-    return JsonResponse({'progress': progress})
+    skyfly_request_instance = SkyflyRequest.objects.get(unique_id=request_uuid)
+    progress = skyfly_request_instance.progress
+    redirect_url = reverse('skyfly:request', kwargs={'request_uuid': skyfly_request_instance.unique_id})
+    return JsonResponse({'progress': progress, 'redirect_url': redirect_url})
 
 
 def _datetime_to_seconds(dt_object):

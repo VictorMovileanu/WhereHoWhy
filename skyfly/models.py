@@ -41,7 +41,7 @@ class SkyflyRequest(TimeStampedModel):
 
     @property
     def progress(self):
-        return str(round((self.length_combinations - self.left_combinations) / self.length_combinations * 100, 0)) + "%"
+        return int(round((self.length_combinations - self.left_combinations) / self.length_combinations * 100, 0))
 
     def __str__(self):
         return "SkyflyRequest ({})".format(self.created.strftime("%d/%m/%Y %h:%m"))

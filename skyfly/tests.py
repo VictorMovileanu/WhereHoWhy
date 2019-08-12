@@ -30,7 +30,7 @@ class SubmissionTests(TestCase):
         dates = [
             {'from': (friday_in_one_month + datetime.timedelta(days=7*i)).strftime('%d/%m/%Y'),
              'until': (friday_in_one_month + datetime.timedelta(days=7*i) + datetime.timedelta(days=2)).strftime('%d/%m/%Y')}
-            for i in range(4)
+            for i in range(2)
         ]
 
         result = []
