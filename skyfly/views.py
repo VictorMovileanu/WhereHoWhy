@@ -7,6 +7,7 @@ from datetime import datetime
 
 import pytz
 from django.conf import settings
+from django.core.mail import send_mail
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -47,6 +48,18 @@ class IndexView(View):
                 length_combinations=len(combinations),
             )
 
+            email = request.POST.get('email')
+            if email:
+                url = reverse('skyfly:request', kwargs={'request_uuid': skyfly_request_instance.unique_id})
+                url = request.build_absolute_uri(url)
+                send_mail(
+                    'Link to your request',
+                    'Here is the link to your request: {}'.format(url),
+                    'skyfly@wherehowhy.com',
+                    [email],
+                    fail_silently=True,  # todo handle error
+                )
+
             if settings.SIMULTANEOUS_REQUESTS:
                 chunk_size = settings.SIMULTANEOUS_REQUESTS
                 for i in range(0, len(combinations), chunk_size):
@@ -60,6 +73,7 @@ class IndexView(View):
             return JsonResponse({'status-url': status_url})
 
     def _parse_and_validate_submitted_data(self, data):
+        # todo: validate flight dates lie in the future
         cities_from = [self._parse_location(data, key) for key in data.keys() if key.startswith('city-from')]
         cities_to = [self._parse_location(data, key) for key in data.keys() if key.startswith('city-to')]
         flight_dates = [self._parse_date_range(data, key) for key in data.keys() if key.startswith('flight-date')]

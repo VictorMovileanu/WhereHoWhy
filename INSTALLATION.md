@@ -37,6 +37,8 @@ ALLOWED_HOSTS=.localhost,127.0.0.1
 DATABASE_URL=postgres://db_user:db_password@db_host:db_port/db_name
 CELERY_BROKER_URL=amqp://myuser:mypassword@localhost:5672/myvhost
 KIWI_API_KEY=
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
 ```
 
 # Server setup

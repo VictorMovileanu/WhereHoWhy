@@ -36,6 +36,7 @@
     padding: 0 10px;
 }
 
+.email-input,
 .date-input,
 .city-input {
     max-width: 400px;
