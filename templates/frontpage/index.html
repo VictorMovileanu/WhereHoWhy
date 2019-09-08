@@ -2,12 +2,25 @@
 {% load staticfiles %}
 
 {% block content %}
+    <div class="container mt-3">
 
-<div class="container">
+        <h1>Projects</h1>
 
-    <h1>Projects</h1>
+        <div class="my-3">
+            <a href="https://lucene.apache.org/solr/guide/8_1/" target="_blank"><button type="button" class="btn btn-icon btn-outline-secondary" style="background-image: url('{% static 'img/Solr.png' %}'); background-repeat: no-repeat; background-position: center"></button></a>
+            <a href="https://courses.edx.org/dashboard" target="_blank"><button type="button" class="btn btn-icon btn-outline-secondary" style="background-image: url('{% static 'img/edx.png' %}'); background-repeat: no-repeat; background-position: center"></button></a>
+            <a href="{% url 'skyfly:index' %}" target="_blank"><button type="button" class="btn btn-icon btn-outline-secondary" style="background-image: url('{% static 'img/skyfly.png' %}'); background-repeat: no-repeat; background-position: center; background-size: contain"></button></a>
+        </div>
 
-    <h2><a href="{% url 'skyfly:index' %}">Skyfly</a></h2>
+        <h2><a href="{% url 'skyfly:index' %}">Skyfly</a></h2>
 
-</div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <ul>
+        <li><a href="https://iconscout.com/icon/solr" target="_blank">Solr Logo Icon</a> by <a
+                href="https://iconscout.com/contributors/icon-mafia">Icon Mafia</a> on <a href="https://iconscout.com">Iconscout</a>
+        </li>
+    </ul>
 {% endblock %}
