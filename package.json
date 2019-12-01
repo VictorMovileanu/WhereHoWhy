@@ -1,0 +1,22 @@
+{
+  "name": "wherehowhy",
+  "version": "1.0.0",
+  "description": "* pull code * optional: collect static files * `sudo supervisorctl restart wherehowhy`",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "node-sass static/sass/main.scss static/css/style.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViggieSmalls/WhereHoWhy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ViggieSmalls/WhereHoWhy/issues"
+  },
+  "homepage": "https://github.com/ViggieSmalls/WhereHoWhy#readme",
+  "dependencies": {
+    "node-sass": "^4.13.0"
+  }
+}
