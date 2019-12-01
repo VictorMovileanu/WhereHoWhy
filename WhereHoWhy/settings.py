@@ -15,6 +15,8 @@ from decouple import config, Csv
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.conf.urls.static import static
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -33,6 +35,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     'frontpage',
     'skyfly',
     'django_extensions',
+    'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -129,6 +134,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  # TODO: you might want to configure this for deployment
+
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 SIMULTANEOUS_REQUESTS = 5  # number of threads used to send requests to the kiwi API
 
@@ -163,3 +171,23 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    'codemirror': {
+        'mode': 'htmlmixed',
+        'lineNumbers': 'true',
+
+        # # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+        # 'theme': 'monokai',
+    },
+    'summernote': {
+        # Change editor size
+        'width': '100%',
+        'height': '500'
+    }
+}
+
+FILEBROWSER_DIRECTORY = ''
+DIRECTORY = ''

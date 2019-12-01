@@ -13,14 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from filebrowser.sites import site
+
 from frontpage import views
 
 urlpatterns = [
+    path('admin/filebrowser/', site.urls),
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
-    path('', views.frontpage, name='frontpage'),
+    path('', views.HomeView.as_view(), name='frontpage'),
     path('knowledge-tree/', views.knowledge_tree, name='knowledge-tree'),
     path('quotes/', views.quotes, name='quotes'),
-    path('skyfly/', include('skyfly.urls', namespace='skyfly'))
+    path('skyfly/', include('skyfly.urls', namespace='skyfly')),
+    path('summernote/', include('django_summernote.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
