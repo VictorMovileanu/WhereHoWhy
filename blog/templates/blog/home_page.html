@@ -2,9 +2,22 @@
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
-    {{ page.title }}
+
+    <div class="heading-primary">
+        <h1>
+            <span class="heading-primary__letter">W<span class="heading-primary__letter--shadow">W</span></span>
+            <span class="heading-primary__letter">h<span class="heading-primary__letter--shadow">h</span></span>
+            <span class="heading-primary__letter">e<span class="heading-primary__letter--shadow">e</span></span>
+            <span class="heading-primary__letter">r<span class="heading-primary__letter--shadow">r</span></span>
+            <span class="heading-primary__letter">e<span class="heading-primary__letter--shadow">e</span></span>
+            <span class="heading-primary__letter">H<span class="heading-primary__letter--shadow">H</span></span>
+            <span class="heading-primary__letter">o<span class="heading-primary__letter--shadow">o</span></span>
+            <span class="heading-primary__letter">W<span class="heading-primary__letter--shadow">W</span></span>
+            <span class="heading-primary__letter">h<span class="heading-primary__letter--shadow">h</span></span>
+            <span class="heading-primary__letter">y<span class="heading-primary__letter--shadow">y</span></span>
+        </h1>
+    </div>
     {{ page.body|richtext }}
-{% endblock %}
+{% endblock %}WhereHoWhy

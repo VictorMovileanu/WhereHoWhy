@@ -2,3 +2,45 @@ body {
   font-family: "Sawarabi Mincho", sans-serif;
   font-weight: 400;
 }
+
+.heading-primary {
+  text-align: center;
+  font-size: 4.5rem;
+
+  &__letter {
+    font-size: 5rem;
+    font-weight: 600;
+    width: 9%;
+    display: inline-block;
+    transition: all 1s;
+    position: relative;
+    backface-visibility: hidden;
+
+    &--shadow {
+      color: transparent;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      text-shadow: .5rem .5rem 1rem rgba($color-black, .3);
+      transition: all 1s;
+      backface-visibility: hidden;
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
+
+    &:hover > &--shadow {
+      transform: translate(-50%, -50%) scale(.8);
+      text-shadow: .5rem .5rem .5rem rgba($color-black, .65);
+    }
+
+    @include respond(phone) {
+      font-size: 3rem;
+      width: 8%;
+    }
+  }
+
+
+}
