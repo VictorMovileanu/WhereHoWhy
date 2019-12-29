@@ -4,47 +4,32 @@ body {
 }
 
 .heading-primary {
-  text-align: center;
-  font-size: 4.5rem;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: rgba(255, 255, 255, .5) 2px 5px 8px;
+  display: flex;
+  justify-content: space-around;
 
   &__letter {
     font-size: 5rem;
     font-weight: 600;
-    width: 9%;
-    display: inline-block;
-    transition: all .5s ease;
-    position: relative;
-    backface-visibility: hidden;
-
-    &--shadow {
-      color: transparent;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      text-shadow: .5rem .5rem 1rem rgba($color-black, .3);
-      transition: all .5s ease;
-      backface-visibility: hidden;
-    }
-
-    &:hover {
-      transform: scale(1.3);
-    }
-
-    &:hover > &--shadow {
-      transform: translate(-50%, -50%) scale(.8);
-      text-shadow: .5rem .5rem .5rem rgba($color-black, .65);
-    }
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 
     @include respond(tab-land) {
       font-size: 4rem;
-      width: 8%;
     }
-    @include respond(phone) {
-      font-size: 3rem;
-      width: 7%;
+
+    &:hover {
+      width: calc(100% - 2px);
+      outline: 1px solid rgba(255, 255, 255, .5);
     }
   }
 
-
+  @include respond(tab-land) {
+    flex-direction: column;
+  }
 }
