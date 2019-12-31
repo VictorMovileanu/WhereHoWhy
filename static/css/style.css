@@ -17,7 +17,7 @@ body {
 
 .heading-primary {
   text-transform: uppercase;
-  color: white;
+  color: #fff;
   text-shadow: rgba(255, 255, 255, 0.5) 2px 5px 8px;
   display: flex;
   justify-content: space-around;
@@ -28,10 +28,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; }
+    width: 100%;
+    transition: all 0.4s;
+    outline: 1px solid transparent; }
     .heading-primary__letter:hover {
+      filter: brightness(150%);
       width: calc(100% - 2px);
-      outline: 1px solid rgba(255, 255, 255, 0.5); }
+      outline: 1px solid rgba(153, 153, 153, 0.5); }
   @media (max-width: 75em) {
     .heading-primary {
       font-size: 4rem;
@@ -60,7 +63,7 @@ body {
     display: flex;
     justify-content: space-between; }
   .footer__link {
-    transition: all .3s; }
+    transition: all 0.4s; }
     .footer__link, .footer__link:link, .footer__link:visited {
       color: white;
       font-size: 1.6rem;
