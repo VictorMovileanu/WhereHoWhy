@@ -20,24 +20,24 @@ body {
   color: white;
   text-shadow: rgba(255, 255, 255, 0.5) 2px 5px 8px;
   display: flex;
-  justify-content: space-around; }
+  justify-content: space-around;
+  font-size: 5rem;
+  font-weight: 600; }
   .heading-primary__letter {
-    font-size: 5rem;
-    font-weight: 600;
     height: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%; }
-    @media (max-width: 75em) {
-      .heading-primary__letter {
-        font-size: 4rem; } }
     .heading-primary__letter:hover {
       width: calc(100% - 2px);
       outline: 1px solid rgba(255, 255, 255, 0.5); }
   @media (max-width: 75em) {
     .heading-primary {
-      flex-direction: column; } }
+      font-size: 4rem;
+      flex-direction: column;
+      height: 100vh;
+      width: 8rem; } }
 
 body {
   min-height: 100vh;
