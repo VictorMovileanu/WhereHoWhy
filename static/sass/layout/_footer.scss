@@ -1,0 +1,49 @@
+.footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__border {
+    max-width: 60rem;
+    width: 90%;
+    border-top: 1px solid white;
+    margin-bottom: 5px;
+  }
+
+  &__navigation {
+    max-width: 50rem;
+    width: 90%;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__link {
+    transition: all .3s;
+
+    &,
+    &:link,
+    &:visited {
+      color: white;
+      font-size: 1.6rem;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    &:hover {
+      border-bottom: 1px solid currentColor;
+    }
+  }
+
+  @include respond(tab-port) {
+    right: 0;
+    width: calc(100% - 8rem);
+  }
+}
