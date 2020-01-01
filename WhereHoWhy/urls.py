@@ -24,6 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^cms/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
+    path('skyfly/', include('skyfly.urls', namespace='skyfly')),
     path('', include(wagtail_urls)),
-    path('skyfly/', include('skyfly.urls', namespace='skyfly'))
 ]

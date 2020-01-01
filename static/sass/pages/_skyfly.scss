@@ -1,0 +1,39 @@
+.email-input,
+.date-input,
+.city-input {
+  max-width: 400px;
+}
+
+.city-input input {
+  text-transform: uppercase;
+}
+
+.date-input button,
+.city-input button {
+  font-size: 9px;
+  border: 1px solid darkgray;
+}
+
+.skyfly-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .input-group {
+    margin: 2px 0;
+  }
+
+  .input-group-wrapper {
+    max-width: 300px;
+    width: 100%;
+  }
+
+  input {
+    font-size: 1.5rem;
+  }
+
+  &__progress-bar {
+    display: none;
+    max-width: 400px;
+  }
+}

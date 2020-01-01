@@ -1,19 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/skyfly.css' %}">
-{% endblock %}
-
 {% block content %}
-    <form method="post" onsubmit="submitData()">
+    <div class="content">
+    <div class="content-box">
+    <form method="post" onsubmit="submitData()" class="skyfly-form">
         {% csrf_token %}
-        <div class="container">
-            <div class="text-centered">
-                <img src="{% static 'img/eagle.png' %}" alt=""> {# https://de.pngtree.com/freepng/eagle_1978481.html #}
-                <h1>From</h1>
+                <span class="content-box__title">From</span>
                 <div class="input-group-wrapper">
-                    <div class="input-group city-input mb-2">
+                    <div class="input-group city-input">
                         <input name="city-from_0" type="text" class="form-control">
                         <div class="input-group-append">
                             <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
@@ -22,9 +17,9 @@
                     </div>
                 </div>
 
-                <h2 class="mt-3">To</h2>
+                <span class="content-box__title">To</span>
                 <div class="input-group-wrapper">
-                    <div class="input-group city-input mb-2">
+                    <div class="input-group city-input">
                         <input name="city-to_0" type="text" class="form-control">
                         <div class="input-group-append">
                             <button class="btn btn__add" type="button"><span class="icon-plus"></span></button>
@@ -33,9 +28,9 @@
                     </div>
                 </div>
 
-                <h2 class="mt-3">When?</h2>
+                <span class="content-box__title">When?</span>
                 <div class="input-group-wrapper">
-                    <div class="input-group date-input mb-2">
+                    <div class="input-group date-input">
                         <input name="flight-date_0" type="text" class="form-control js-datepickerInput">
                         <div class="input-group-append">
                             <button class="btn js-datepickerButton" type="button"><span class="icon-calendar"
@@ -46,11 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="progress mt-5" style="display: none">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                </div>
-
-                <h2>Email</h2>
+                <span class="content-box__title">Email</span>
                 <div class="input-group-wrapper">
                     <div class="input-group email-input mb-2">
                         <input name="email" type="text" class="form-control">
@@ -59,9 +50,12 @@
 
                 {# TODO: add email input and send email with request link #}
                 <button class="btn btn-primary submit-skyfly-request" type="submit"><span class="icon-switch"></span></button>
-            </div>
-        </div>
+                <div class="skyfly-form__progress-bar">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
     </form>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

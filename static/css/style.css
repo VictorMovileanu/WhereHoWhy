@@ -13,26 +13,33 @@ body {
 
 body {
   font-family: "Sawarabi Mincho", sans-serif;
-  font-weight: 400; }
+  font-weight: 400;
+  padding: 2rem; }
+  @media (max-width: 75em) {
+    body {
+      padding: 0; } }
 
 .heading-primary {
   text-transform: uppercase;
   color: #fff;
-  text-shadow: rgba(255, 255, 255, 0.5) 2px 5px 8px;
+  text-shadow: #eeeeee 2px 5px 8px;
   display: flex;
   justify-content: space-around;
   font-size: 5rem;
   font-weight: 600; }
   .heading-primary__letter {
-    height: 2em;
+    height: 10rem;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     transition: all 0.4s;
-    outline: 1px solid transparent; }
+    outline: 1px solid transparent;
+    cursor: pointer; }
+    .heading-primary__letter, .heading-primary__letter:link, .heading-primary__letter:active, .heading-primary__letter:visited, .heading-primary__letter:hover {
+      color: #fff;
+      text-decoration: none; }
     .heading-primary__letter:hover {
-      filter: brightness(150%);
       width: calc(100% - 2px);
       outline: 1px solid rgba(153, 153, 153, 0.5); }
   @media (max-width: 75em) {
@@ -42,26 +49,38 @@ body {
       height: 100vh;
       width: 8rem; } }
 
+.invalid-feedback {
+  font-size: 1.3rem; }
+
+.content-box {
+  padding: 5rem 8rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: .5rem;
+  width: 40vw; }
+  .content-box__title {
+    font-size: 2.5rem; }
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 95vh; }
+
 .footer {
   position: fixed;
   width: 100%;
   bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; }
-  .footer__border {
-    max-width: 60rem;
-    width: 90%;
-    border-top: 1px solid white;
-    margin-bottom: 5px; }
+  display: block; }
   .footer__navigation {
     max-width: 50rem;
-    width: 90%; }
+    width: 90%;
+    border-top: 1px solid white;
+    margin: 0 auto; }
   .footer__list {
+    padding-top: .5rem;
     list-style: none;
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-around; }
   .footer__link {
     transition: all 0.4s; }
     .footer__link, .footer__link:link, .footer__link:visited {
@@ -82,3 +101,31 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; }
+
+.email-input,
+.date-input,
+.city-input {
+  max-width: 400px; }
+
+.city-input input {
+  text-transform: uppercase; }
+
+.date-input button,
+.city-input button {
+  font-size: 9px;
+  border: 1px solid darkgray; }
+
+.skyfly-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+  .skyfly-form .input-group {
+    margin: 2px 0; }
+  .skyfly-form .input-group-wrapper {
+    max-width: 300px;
+    width: 100%; }
+  .skyfly-form input {
+    font-size: 1.5rem; }
+  .skyfly-form__progress-bar {
+    display: none;
+    max-width: 400px; }

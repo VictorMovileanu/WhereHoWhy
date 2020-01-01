@@ -18,7 +18,7 @@ function submitData(data) {
         type: 'POST',
         data: form.serialize(),
         success: function (data) {
-            $('.progress').css('display', 'flex');
+            $('.skyfly-form__progress-bar').css('display', 'inline-block');
             updateProgress(data['status-url'])
         },
         error: function (jqXHR, textStatus, errorThrown) {
