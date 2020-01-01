@@ -8,4 +8,9 @@
     font-size: 2.5rem;
   }
 
+  @include respond(tab-land) {
+    width: 90vw;
+    padding: 1rem 2rem;
+  }
+
 }

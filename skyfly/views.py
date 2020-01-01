@@ -93,8 +93,9 @@ class IndexView(View):
 
     def _parse_location(self, data, key):
         try:
-            self._validate_location(data[key])
-            return data[key]
+            location = str(data[key]).upper()
+            self._validate_location(location)
+            return location
         except AssertionError:
             self.errors['input-errors'].append({
                 'input_name': key,
