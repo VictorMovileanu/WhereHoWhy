@@ -9,7 +9,18 @@ html {
   font-size: 62.5%; }
 
 body {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-image: url("../img/background_big.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; }
+  @media (max-width: 75em) {
+    body {
+      background-image: url("../img/background_medium.jpg"); } }
+  @media (max-width: 37.5em) {
+    body {
+      background-image: url("../img/background_small.jpg"); } }
 
 body {
   font-family: "Sawarabi Mincho", sans-serif;
@@ -98,13 +109,6 @@ body {
     .footer {
       right: 0;
       width: calc(100% - 8rem); } }
-
-body {
-  min-height: 100vh;
-  background-image: url("../img/andy-holmes-rCbdp8VCYhQ-unsplash.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; }
 
 .email-input,
 .date-input,
