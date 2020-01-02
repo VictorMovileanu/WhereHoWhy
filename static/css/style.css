@@ -131,12 +131,15 @@ body {
     margin: 2px 0; }
   .skyfly-form .input-group-wrapper {
     max-width: 300px;
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 10px; }
   .skyfly-form input {
     font-size: 1.5rem; }
-  .skyfly-form__progress-bar {
+  .skyfly-form .progress {
+    margin-top: 2rem;
     display: none;
-    max-width: 400px; }
+    max-width: 400px;
+    width: 100%; }
 
 #scatter-plot {
   height: 50vh; }
