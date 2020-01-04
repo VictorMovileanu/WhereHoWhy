@@ -22,7 +22,4 @@ body {
     background-image: url("../img/background_medium.jpg");
   }
 
-  @include respond(phone) {
-    background-image: url("../img/background_small.jpg");
-  }
 }

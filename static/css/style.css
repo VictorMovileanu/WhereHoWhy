@@ -18,9 +18,6 @@ body {
   @media (max-width: 75em) {
     body {
       background-image: url("../img/background_medium.jpg"); } }
-  @media (max-width: 37.5em) {
-    body {
-      background-image: url("../img/background_small.jpg"); } }
 
 body {
   font-family: "Sawarabi Mincho", sans-serif;
@@ -55,7 +52,7 @@ body {
       outline: 1px solid rgba(153, 153, 153, 0.5); }
   @media (max-width: 75em) {
     .heading-primary {
-      font-size: 4rem;
+      font-size: 8vh;
       flex-direction: column;
       height: 100vh;
       width: 8rem; } }
