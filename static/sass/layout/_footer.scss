@@ -20,6 +20,9 @@
 
   &__link {
     transition: all $transition-time-medium;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 
     &,
     &:link,

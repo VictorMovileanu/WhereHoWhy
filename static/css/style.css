@@ -94,7 +94,10 @@ body {
     display: flex;
     justify-content: space-around; }
   .footer__link {
-    transition: all 0.4s; }
+    transition: all 0.4s;
+    background-color: transparent;
+    border: none;
+    cursor: pointer; }
     .footer__link, .footer__link:link, .footer__link:visited {
       color: white;
       font-size: 1.6rem;
