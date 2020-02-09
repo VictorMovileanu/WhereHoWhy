@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   height: 75vh;
+  overflow-y: hidden;
 
   @include respond(tab-land) {
     float: right;

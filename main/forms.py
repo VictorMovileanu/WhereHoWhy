@@ -1,5 +1,5 @@
 from django import forms
-from frontpage.models import Tweet
+from main.models import Tweet
 
 
 class TweetForm(forms.ModelForm):

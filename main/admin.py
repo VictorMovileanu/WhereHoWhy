@@ -1,4 +1,4 @@
 from django.contrib import admin
-from frontpage.models import Tweet
+from main.models import Tweet
 
 admin.site.register(Tweet)

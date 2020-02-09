@@ -1,12 +1,9 @@
 from django.shortcuts import render
 from django.template.response import TemplateResponse
+from django.views.generic import TemplateView
 
-from frontpage.forms import TweetForm
-from frontpage.models import Tweet
-
-
-def frontpage(request):
-    return TemplateResponse(request, 'frontpage/index.html')
+from main.forms import TweetForm
+from main.models import Tweet
 
 
 def quotes(request):

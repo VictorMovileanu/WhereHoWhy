@@ -4,6 +4,8 @@
   border-radius: .5rem;
   width: 40vw;
   min-width: 80rem;
+  display: flex;
+  align-items: center;
 
   &__title {
     font-size: 2.5rem;
@@ -12,6 +14,6 @@
   @include respond(tab-land) {
     width: 80vw;
     padding: 1rem 2rem;
+    min-width: auto;
   }
-
 }
