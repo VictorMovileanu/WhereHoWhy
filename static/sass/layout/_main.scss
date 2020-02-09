@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+
+  @include respond(tab-land) {
+    float: right;
+    width: calc(100% - #{$header-width-tab-land});
+  }
+
+}

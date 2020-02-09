@@ -40,6 +40,6 @@
 
   @include respond(tab-port) {
     right: 0;
-    width: calc(100% - 8rem);
+    width: calc(100% - #{$header-width-tab-land});
   }
 }

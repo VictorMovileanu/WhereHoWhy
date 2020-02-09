@@ -19,6 +19,10 @@ body {
     body {
       background-image: url("../img/background_medium.jpg"); } }
 
+@media (max-width: 75em) {
+  header {
+    position: fixed; } }
+
 body {
   font-family: "Sawarabi Mincho", sans-serif;
   font-weight: 400;
@@ -64,19 +68,24 @@ body {
   padding: 5rem 8rem;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: .5rem;
-  width: 40vw; }
+  width: 40vw;
+  min-width: 80rem; }
   .content-box__title {
     font-size: 2.5rem; }
   @media (max-width: 75em) {
     .content-box {
-      width: 90vw;
+      width: 80vw;
       padding: 1rem 2rem; } }
 
-.content {
+.main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 95vh; }
+  height: 75vh; }
+  @media (max-width: 75em) {
+    .main {
+      float: right;
+      width: calc(100% - 8rem); } }
 
 .footer {
   position: fixed;

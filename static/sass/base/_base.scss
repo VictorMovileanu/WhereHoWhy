@@ -23,3 +23,9 @@ body {
   }
 
 }
+
+header {
+  @include respond(tab-land) {
+    position: fixed;
+  }
+}

@@ -3,13 +3,14 @@
   background-color: rgba($color-white, 0.5);
   border-radius: .5rem;
   width: 40vw;
+  min-width: 80rem;
 
   &__title {
     font-size: 2.5rem;
   }
 
   @include respond(tab-land) {
-    width: 90vw;
+    width: 80vw;
     padding: 1rem 2rem;
   }
 
