@@ -133,7 +133,9 @@ STATICFILES_DIRS = [
 
 
 include(
+    "apps.py",
     "wagtail.py",
     "logging.py",
+    "django_extensions.py",
     optional('local_settings.py')
 )
