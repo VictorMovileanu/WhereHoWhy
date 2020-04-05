@@ -12,6 +12,8 @@ INSTALLED_APPS += (
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
+    'taggit',
+    'modelcluster',
 )
 
 MIDDLEWARE += (

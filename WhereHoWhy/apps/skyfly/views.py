@@ -13,8 +13,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
-from skyfly import IATA_CODES
-from skyfly.models import SkyflyRequest
+from WhereHoWhy.apps.skyfly import IATA_CODES
+from WhereHoWhy.apps.skyfly.models import SkyflyRequest
 from .tasks import query_kiwi, process_request
 
 

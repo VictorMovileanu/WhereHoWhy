@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
+from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -22,9 +23,8 @@ from wagtail.core import urls as wagtail_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^cms/', include(wagtailadmin_urls)),
-    re_path(r'^documents/', include(wagtaildocs_urls)),
-    path('', include('blog.urls', namespace='blog')),
-    path('skyfly/', include('skyfly.urls', namespace='skyfly')),
-    path('', include(wagtail_urls)),
+    path('', TemplateView.as_view(template_name="index.html"), name="index"),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
+    path('blog', include(wagtail_urls)),
 ]

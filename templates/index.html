@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <header>
+        <h1 class="heading-primary">
+            <span class="heading-primary__letter">W</span>
+            <span class="heading-primary__letter">h</span>
+            <span class="heading-primary__letter">e</span>
+            <span class="heading-primary__letter">r</span>
+            <span class="heading-primary__letter">e</span>
+            <span class="heading-primary__letter">H</span>
+            <span class="heading-primary__letter">o</span>
+            <span class="heading-primary__letter">W</span>
+            <span class="heading-primary__letter">h</span>
+            <span class="heading-primary__letter">y</span>
+        </h1>
+    </header>
+
+    <main class="main">
+    </main>
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer">
+        <div class="footer__navigation">
+            <ul class="footer__list">
+                <li>
+                    <button class="footer__link" id="about-me">About me</button>
+                </li>
+                <li>
+                    <button class="footer__link" id="contact">Contact</button>
+                </li>
+            </ul>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(function () {
+            $('#contact').popover({
+                placement: 'top',
+                html: true,
+                trigger: 'focus',
+                content: '{% include "partials/paypal.html" %}'
+            });
+            $('#about-me').popover({
+                placement: 'top',
+                html: true,
+                trigger: 'focus',
+                content: '{% include "partials/about_me.html" %}'
+            });
+        });
+    </script>
+{% endblock %}

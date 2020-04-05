@@ -1,5 +1,5 @@
 from django import forms
-from main.models import Tweet
+from WhereHoWhy.apps.main import Tweet
 
 
 class TweetForm(forms.ModelForm):

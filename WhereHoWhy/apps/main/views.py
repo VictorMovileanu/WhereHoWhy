@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.template.response import TemplateResponse
-from django.views.generic import TemplateView
 
-from main.forms import TweetForm
-from main.models import Tweet
+from WhereHoWhy.apps.main import TweetForm
+from WhereHoWhy.apps.main import Tweet
 
 
 def quotes(request):

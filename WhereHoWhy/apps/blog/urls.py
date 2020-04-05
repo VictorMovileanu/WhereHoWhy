@@ -1,6 +1,6 @@
 from django.urls import path
 
-from blog.views import AboutMeView
+from WhereHoWhy.apps.blog.views import AboutMeView
 
 app_name = 'blog'
 

@@ -62,11 +62,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='kiwiresponse',
             name='skyfly_request',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='flights', to='skyfly.SkyflyRequest'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='flights', to='WhereHoWhy.apps.skyfly.SkyflyRequest'),
         ),
         migrations.AddField(
             model_name='kiwiexception',
             name='skyfly_request',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='exceptions', to='skyfly.SkyflyRequest'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='exceptions', to='WhereHoWhy.apps.skyfly.SkyflyRequest'),
         ),
     ]

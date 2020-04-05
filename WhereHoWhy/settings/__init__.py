@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sandbox.wsgi.application'
+WSGI_APPLICATION = 'WhereHoWhy.wsgi.application'
 
 
 # Database

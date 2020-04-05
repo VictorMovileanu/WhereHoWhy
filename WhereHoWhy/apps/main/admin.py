@@ -1,4 +1,4 @@
 from django.contrib import admin
-from main.models import Tweet
+from WhereHoWhy.apps.main import Tweet
 
 admin.site.register(Tweet)

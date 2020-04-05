@@ -12,7 +12,7 @@ import requests
 from django.conf import settings
 from django.db import transaction
 
-from skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
+from WhereHoWhy.apps.skyfly.models import SkyflyRequest, KiwiResponse, KiwiException
 
 logger = logging.getLogger('skyfly')
 
