@@ -23,3 +23,8 @@ sudo apt-get -y install rabbitmq-server
 sudo rabbitmqctl add_user myuser mypassword
 sudo rabbitmqctl add_vhost myvhost
 sudo rabbitmqctl set_permissions -p myvhost myuser ".*" ".*" ".*"
+
+
+### npm
+sudo apt -y install nodejs
+sudo apt -y install npm

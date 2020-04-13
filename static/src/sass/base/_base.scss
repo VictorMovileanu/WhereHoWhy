@@ -13,13 +13,13 @@ html {
 body {
   box-sizing: border-box;
   min-height: 100vh;
-  background-image: url("../img/background_big.jpg");
+  background-image: url("../../img/background_big.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
   @include respond(tab-land) {
-    background-image: url("../img/background_medium.jpg");
+    background-image: url("../../img/background_medium.jpg");
   }
 
 }

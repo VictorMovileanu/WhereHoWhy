@@ -5,3 +5,4 @@ wagtail~=2.8
 psycopg2
 bpython
 celery~=4.4
+django-webpack-loader
