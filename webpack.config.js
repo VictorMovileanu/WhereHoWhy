@@ -1,6 +1,7 @@
 const path = require("path");
 const BundleTracker = require('webpack-bundle-tracker');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = (env, options) => {
@@ -14,6 +15,10 @@ module.exports = (env, options) => {
         plugins: [
             new CleanWebpackPlugin(),
             new BundleTracker(),
+            new MiniCssExtractPlugin({
+                filename: options.mode === 'production' ? '[name].[hash].css' : '[name].css',
+                chunkFilename: options.mode === 'production' ? '[id].[hash].css' : '[id].css'
+            })
         ],
         module: {
             rules: [
@@ -29,28 +34,21 @@ module.exports = (env, options) => {
                 },
                 {
                     test: /\.s[ac]ss$/i,
-                    use: [
+                    loader: [
+                        options.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+                        'css-loader',
                         {
-                            loader: "file-loader",
+                            loader: "sass-loader",
                             options: {
-                                name: options.mode === 'production' ? '[name]-[hash].css' : '[name].css'
+                                sourceMap: options.mode !== 'production'
                             }
-                        },
-                        {
-                            loader: 'css-loader'
-                        },
-                        {
-                            loader: "postcss-loader"
-                        },
-                        {
-                            loader: 'sass-loader'
                         }
                     ]
                 },
-                // {
-                //     test: /\.(png|woff|woff2|svg|eot|ttf|gif|jpe?g)$/,
-                //     loader: 'file-loader'
-                // }
+                {
+                    test: /\.(png|woff|woff2|svg|eot|ttf|gif|jpe?g)$/,
+                    loader: 'file-loader'
+                }
             ]
         }
     }
