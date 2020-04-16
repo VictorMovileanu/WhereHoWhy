@@ -1,6 +1,6 @@
 django-split-settings
 django-extensions
-Django~=3.0
+Django~=2.2
 wagtail~=2.8
 psycopg2
 bpython
