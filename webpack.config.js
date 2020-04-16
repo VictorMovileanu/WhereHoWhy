@@ -1,5 +1,6 @@
 const path = require("path");
 const BundleTracker = require('webpack-bundle-tracker');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 
 module.exports = (env, options) => {
@@ -11,6 +12,7 @@ module.exports = (env, options) => {
             filename: options.mode === 'production' ? '[name]-[hash].js' : '[name].js'
         },
         plugins: [
+            new CleanWebpackPlugin(),
             new BundleTracker(),
         ],
         module: {

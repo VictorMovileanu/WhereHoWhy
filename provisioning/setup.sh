@@ -26,6 +26,7 @@ sudo rabbitmqctl set_permissions -p myvhost myuser ".*" ".*" ".*"
 
 
 ### npm
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo apt -y install npm
+# installing and running npm in a vagrant requires npm enterprise
+# install and run build scripts locally
+# >> curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+# >> sudo apt-get install -y nodejs
