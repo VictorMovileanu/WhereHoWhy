@@ -26,5 +26,6 @@ sudo rabbitmqctl set_permissions -p myvhost myuser ".*" ".*" ".*"
 
 
 ### npm
-sudo apt -y install nodejs
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
 sudo apt -y install npm

@@ -5,14 +5,13 @@ const BundleTracker = require('webpack-bundle-tracker');
 module.exports = (env, options) => {
     return {
         context: __dirname,
-        // entry: ["./static/src/js/index.js", "./static/src/sass/main.scss"],
-        entry: "./static/src/js/index.js",
+        entry: ["./static/src/js/index.js", "./static/src/sass/main.scss"],
         output: {
             path: path.resolve("./static/dist/"),
             filename: options.mode === 'production' ? '[name]-[hash].js' : '[name].js'
         },
         plugins: [
-            // new BundleTracker(),
+            new BundleTracker(),
         ],
         module: {
             rules: [
