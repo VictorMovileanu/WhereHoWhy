@@ -13,14 +13,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'skyfly.log'),
+            'filename': os.path.join(BASE_DIR, 'django.log'),
         },
-    },
-    'loggers': {
-        'skyfly': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
+    }
 }
