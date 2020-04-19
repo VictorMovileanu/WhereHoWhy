@@ -137,5 +137,6 @@ include(
     "wagtail.py",
     "logging.py",
     "django_extensions.py",
+    "django_webpack_loader.py",
     optional('local_settings.py')
 )

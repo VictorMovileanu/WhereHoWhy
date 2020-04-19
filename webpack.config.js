@@ -10,11 +10,14 @@ module.exports = (env, options) => {
         entry: ["./static/src/js/index.js", "./static/src/sass/main.scss"],
         output: {
             path: path.resolve("./static/dist/"),
-            filename: options.mode === 'production' ? '[name]-[hash].js' : '[name].js'
+            filename: options.mode === 'production' ? '[name].[hash].js' : '[name].js'
         },
         plugins: [
             new CleanWebpackPlugin(),
-            new BundleTracker(),
+            new BundleTracker({
+                path: __dirname,
+                filename: "./static/dist/webpack-stats.json"
+            }),
             new MiniCssExtractPlugin({
                 filename: options.mode === 'production' ? '[name].[hash].css' : '[name].css',
                 chunkFilename: options.mode === 'production' ? '[id].[hash].css' : '[id].css'
