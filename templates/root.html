@@ -39,9 +39,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<!-- custom scripts -->
-<script src="{% static 'js/csrf.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
+<!-- custom js -->
 {% render_bundle 'main' 'js' %}
 
 {% block extra_js %}{% endblock %}
