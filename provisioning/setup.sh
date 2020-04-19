@@ -30,3 +30,11 @@ sudo rabbitmqctl set_permissions -p myvhost myuser ".*" ".*" ".*"
 # install and run build scripts locally
 # >> curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 # >> sudo apt-get install -y nodejs
+
+### setup server
+sudo apt-get -y install nginx
+sudo apt-get -y install supervisor
+sudo systemctl enable supervisor
+sudo systemctl start supervisor
+adduser wherehowhy
+gpasswd -a wherehowhy sudo
