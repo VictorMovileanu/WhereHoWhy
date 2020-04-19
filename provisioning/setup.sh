@@ -38,3 +38,4 @@ sudo systemctl enable supervisor
 sudo systemctl start supervisor
 adduser wherehowhy
 gpasswd -a wherehowhy sudo
+# todo: setup web server
