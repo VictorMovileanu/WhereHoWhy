@@ -22,10 +22,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 80%;
     transition: all $transition-time-medium;
     outline: 1px solid transparent;
-    cursor: pointer;
+    user-select: none;
 
     &,  // TODO: refactor
     &:link,
@@ -43,7 +43,7 @@ body {
   }
 
   @include respond(tab-land) {
-    font-size: 8vh;
+    font-size: 5vh;
     flex-direction: column;
     height: 100vh;
     width: $header-width-tab-land;

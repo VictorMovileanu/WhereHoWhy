@@ -76,6 +76,8 @@ WSGI_APPLICATION = 'WhereHoWhy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+# todo: correct deploy
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

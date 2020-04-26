@@ -4,7 +4,7 @@
   "description": "personal website",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "node-sass static/src/sass/main.scss static/css/style.css -w",
+    "start": "webpack --watch --mode production",
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
   },
