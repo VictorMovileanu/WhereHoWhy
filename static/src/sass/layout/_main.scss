@@ -4,6 +4,7 @@
   justify-content: center;
   height: 75vh;
   overflow-y: hidden;
+  flex: 1;
 
   @include respond(tab-land) {
     float: right;

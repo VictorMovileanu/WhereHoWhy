@@ -7,8 +7,11 @@
 
 @import "components/content-box";
 @import "components/star-wars";
+@import "components/side-nav";
 
 @import "layout/main";
 @import "layout/footer";
+@import "layout/content";
+@import "layout/sidebar";
 
 @import "pages/home";

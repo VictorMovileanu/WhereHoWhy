@@ -1,7 +1,7 @@
 {% extends "root.html" %}
 {% load static %}
 
-{% block header %}
+{% block body %}
     <header>
         <h1 class="heading-primary">
             <span class="heading-primary__letter">W</span>
@@ -16,9 +16,13 @@
             <span class="heading-primary__letter">y</span>
         </h1>
     </header>
-{% endblock %}
 
-{% block footer %}
+    <div class="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
     <footer class="footer">
         <div class="footer__navigation">
             <ul class="footer__list">
