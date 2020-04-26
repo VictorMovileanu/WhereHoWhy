@@ -1,5 +1,6 @@
 import { elements } from "./views/base";
+import * as sideNavItem from "./views/sideNavItem"
 
 elements.sideNavItems.forEach(el => el.addEventListener('click', e => {
-    console.log("Hello Item!")
+    sideNavItem.populateMain(el)
 }));
