@@ -10,5 +10,11 @@
     padding: 0.8rem 0;
     user-select: none;
     cursor: pointer;
+    opacity: 0.5;
+    transition: linear .3s;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
