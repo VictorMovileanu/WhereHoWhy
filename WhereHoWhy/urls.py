@@ -29,4 +29,5 @@ urlpatterns = [
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('blog', include(wagtail_urls)),
+    path('modules/', include('WhereHoWhy.apps.modules.urls', namespace='modules')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

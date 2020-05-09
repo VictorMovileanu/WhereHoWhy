@@ -6,4 +6,5 @@ export const populateMain = function (el) {
             ${el.innerHTML}
         </div>
     `;
+    elements.main.innerHTML = markup;
 };

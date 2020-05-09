@@ -12,6 +12,7 @@ module.exports = (env, options) => {
             path: path.resolve("./static/dist/"),
             filename: options.mode === 'production' ? '[name].[hash].js' : '[name].js'
         },
+        devtool: 'source-map',
         plugins: [
             new CleanWebpackPlugin(),
             new BundleTracker({
