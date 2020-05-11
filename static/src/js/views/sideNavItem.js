@@ -6,5 +6,16 @@ export const populateMain = function (el) {
             ${el.innerHTML}
         </div>
     `;
-    elements.main.innerHTML = markup;
+
+    if (elements.main.children.length) {
+        elements.main.childNodes.forEach(el => {
+            $(el).removeClass("fadein");
+            $(el).addClass("fadeout")
+        });
+        setTimeout(() => {
+            elements.main.innerHTML = markup;
+        }, 1200)
+    } else {
+        elements.main.innerHTML = markup;
+    }
 };
