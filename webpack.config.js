@@ -51,7 +51,10 @@ module.exports = (env, options) => {
                 },
                 {
                     test: /\.(png|woff|woff2|svg|eot|ttf|gif|jpe?g)$/,
-                    loader: 'file-loader'
+                    loader: 'file-loader',
+                    options: {
+                        publicPath: '/static/dist/'
+                    }
                 }
             ]
         }

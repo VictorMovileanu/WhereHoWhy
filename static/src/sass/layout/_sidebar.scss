@@ -1,3 +1,16 @@
 .sidebar {
-  flex: 0 0 17%;
+  position: absolute;
+  width: 30rem;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+
+
+  @include respond(phone) {
+    width: 25rem;
+  }
+  @include respond(phone-small) {
+    width: 20rem;
+  }
+
 }
