@@ -4,7 +4,7 @@
   "description": "personal website",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch --mode production",
+    "start": "webpack --watch --mode development",
     "dev": "webpack --watch --mode development",
     "build": "webpack --mode production"
   },
@@ -44,5 +44,8 @@
     "plugins": {
       "autoprefixer": {}
     }
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
