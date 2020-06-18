@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-    <header>
+    <header class="header">
         <h1 class="heading-primary">
             <span class="heading-primary__letter">W</span>
             <span class="heading-primary__letter">h</span>
@@ -17,10 +17,25 @@
         </h1>
     </header>
 
-    <div class="content">
-        {% block content %}
+    <main class="main">
 
-        {% endblock %}
+    </main>
+
+    <div class="sidebar">
+        <ul class="quotes-list">
+            <li class="quotes-list__item">Maecenas egestas arcu</li>
+            <li class="quotes-list__item">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+            <li class="quotes-list__item">Aliquam consequuntur cum fugiat itaque modi natus nemo placeat qui
+                recusandae
+            </li>
+            <li class="quotes-list__item">Ab at consequatur deserunt dolorum hic itaque modi quasi quidem sit</li>
+            <li class="quotes-list__item">Maecenas egestas arcu</li>
+            <li class="quotes-list__item">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+            <li class="quotes-list__item">Aliquam consequuntur cum fugiat itaque modi natus nemo placeat qui
+                recusandae
+            </li>
+            <li class="quotes-list__item">Ab at consequatur deserunt dolorum hic itaque modi quasi quidem sit</li>
+        </ul>
     </div>
 
     <footer class="footer">
@@ -40,12 +55,6 @@
 {% block extra_js %}
     <script>
         $(function () {
-            $('#contact').popover({
-                placement: 'top',
-                html: true,
-                trigger: 'focus',
-                content: '{% include "partials/paypal.html" %}'
-            });
             $('#about-me').popover({
                 placement: 'top',
                 html: true,

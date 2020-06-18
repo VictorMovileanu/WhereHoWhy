@@ -4,11 +4,9 @@
   justify-content: center;
   height: 75vh;
   overflow-y: hidden;
-  flex: 1;
 
   @include respond(tab-land) {
-    float: right;
-    width: calc(100% - #{$header-width-tab-land});
+    display: none;
   }
 
 }

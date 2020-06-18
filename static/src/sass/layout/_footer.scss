@@ -1,12 +1,11 @@
 .footer {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 2*#{$body-padding});
   bottom: 0;
   display: block;
 
   &__navigation {
     max-width: 50rem;
-    width: 90%;
     border-top: 1px solid white;
     margin: 0 auto;
   }
@@ -38,8 +37,8 @@
     }
   }
 
-  @include respond(tab-port) {
-    right: 0;
+  @include respond(tab-land) {
+    right: 1rem;
     width: calc(100% - #{$header-width-tab-land});
   }
 }

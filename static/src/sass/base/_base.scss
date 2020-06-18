@@ -11,21 +11,18 @@ html {
 }
 
 body {
+  padding: $body-padding;
+  display: flex;
+  flex-wrap: wrap;
   box-sizing: border-box;
   min-height: 100vh;
   background-image: url("../../img/background_big.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 
   @include respond(tab-land) {
     background-image: url("../../img/background_medium.jpg");
-  }
-
-}
-
-header {
-  @include respond(tab-land) {
-    position: fixed;
   }
 }

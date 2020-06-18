@@ -1,9 +1,6 @@
-.side-nav {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
+.quotes-list {
   color: $color-white;
+  margin: 0;
 
   &__item {
     font-size: 1.2rem;
@@ -11,7 +8,7 @@
     user-select: none;
     cursor: pointer;
     opacity: 0.5;
-    transition: linear .3s;
+    transition: opacity linear .3s;
 
     &:hover {
       opacity: 1;

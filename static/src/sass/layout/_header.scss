@@ -1,0 +1,7 @@
+.header {
+  flex-basis: 100%;
+
+  @include respond(tab-land) {
+    flex-basis: $header-width-tab-land;
+  }
+}

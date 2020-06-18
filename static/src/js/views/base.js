@@ -1,5 +1,6 @@
 export const elements = {
     main: document.querySelector('.main'),
     sidebar: document.querySelector('.sidebar'),
-    sideNavItems: document.querySelectorAll('.side-nav__item')
+    quotesList: document.querySelector('.quotes-list'),
+    quotesListItems: document.querySelectorAll('.quotes-list__item')
 };

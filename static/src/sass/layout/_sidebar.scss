@@ -5,12 +5,15 @@
   top: 50%;
   transform: translateY(-50%);
 
-
-  @include respond(phone) {
-    width: 25rem;
+  @include respond(tab-land) {
+    position: unset;
+    width: unset;
+    right: unset;
+    top: unset;
+    transform: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: calc(100% - #{$header-width-tab-land});
   }
-  @include respond(phone-small) {
-    width: 20rem;
-  }
-
 }
