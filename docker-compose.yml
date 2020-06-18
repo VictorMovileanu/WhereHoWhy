@@ -1,0 +1,8 @@
+version: "3.5"
+services:
+  db:
+    image: postgres:12.3-alpine
+  web:
+    image: victormovileanu/wherehowhy
+  nginx:
+    image: nginx:1.19-alpine

@@ -1,0 +1,30 @@
+version: "3.5"
+services:
+  db:
+    environment:
+      - POSTGRES_PASSWORD=/run/secrets/psql-pw
+    secrets:
+      - psql-pw
+    volumes:
+      - web-data:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/src/app
+    environment:
+      - POSTGRES_PASSWORD=/run/secrets/psql-pw
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+secrets:
+  psql-pw:
+    file: secrets/psql-password.txt
+
+volumes:
+  web-data:
