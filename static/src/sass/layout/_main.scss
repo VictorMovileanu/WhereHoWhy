@@ -1,12 +1,22 @@
 .main {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   height: 75vh;
   overflow-y: hidden;
 
+  &.show {
+    display: flex;
+    flex-basis: 100%;
+  }
+
   @include respond(tab-land) {
-    display: none;
+    height: 100vh;
+    padding-right: 1rem;
+    &.show {
+      display: flex;
+      flex-basis: calc(100% - #{$header-width-tab-land});
+    }
   }
 
 }
